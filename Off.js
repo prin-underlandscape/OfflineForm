@@ -33,6 +33,15 @@ function processFile (event) {
 	function editFeature (event) {
 		function display(value,index,array) {
 			console.log(value);
+			let PropertiesList=document.getElementById("PropertiesList");
+			const property = document.createElement("p");
+			property.appendChild(document.createTextNode(value));
+//			const rb = document.createElement("input")
+//			rb.setAttribute("type","radio");
+//    			rb.id = index;
+//    			rb.onclick = editFeature;
+//			feature.appendChild(rb);
+			PropertiesList.appendChild(property);
 		}
 		Object.keys(geojson.features[event.target.id].properties).forEach(display);
 		save(geojson.features[event.target.id]);
