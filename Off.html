@@ -3,21 +3,27 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <link rel="stylesheet" href="Off.css">
+    <title>Offline GeoJSON editor fo Underlandscape</title>
   </head>
   <body>
-</html><form id="upload">
-	<label for="file">File to upload</label>
-	<input type="file" id="file" accept=".geojson">
 
-	<button>Upload</button>
+</html><form id="upload" class="fs-6">
+	<label for="file">Selezina il file da caricare</label>
+	<br>
+	<input type="file" id="file" accept=".geojson" onchange=handleSubmit()>
 </form>
 
-<div id="FeatureList">
+<div id="FeatureList" class="fs-6">
+	<button type="button" onclick=closeEdit()>Termina la modifica</button>
 </div>
 
-<div id="PropertiesList">
+<div id="PropertiesList" class="fs-6">
+	<button type="button" onclick=save()>Salva il file geojson</button>
+<p>
 </div>
+
+<!--
 
 <div class="container-fluid">
   <h1>Hello World!</h1>
@@ -31,8 +37,14 @@
 </div>
 
 <link rel="stylesheet" href="bootstrap-5.3.0-dist/css/bootstrap.css">
+
 <script src="jquery-3.7.0.js"></script>
 <script src="bootstrap-5.3.0-dist/js/bootstrap.js"></script>
+-->
+<script src="upload.js"></script>
+<script src="parseFile.js"></script>
+<script src="editFeature.js"></script>
+<script src="format.js"></script>
 <script src="Off.js"></script>
 
 </body>
