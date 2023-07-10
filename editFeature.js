@@ -1,9 +1,12 @@
-function editFeature (propertyEvent) {
+function editFeature (featureEvent) {
 		let properties = new Format().format("Sito");
 //		console.log(properties.forms[0].formitems);				// Debug
 		function keyPress(propertyEvent) {
-		  if (event.keyCode == 13) {
-				document.getElementById(propertyEvent.target.id);
+			
+      console.log(propertyEvent);
+		  if (propertyEvent.key == "Enter") {
+				let fieldName = propertyEvent.target.id;
+				console.log(fieldName);
 		  }
     }
 		function display(value,index,array) {
@@ -15,7 +18,8 @@ function editFeature (propertyEvent) {
 			let propertyValue = document.createElement("input");
 			propertyValue.setAttribute("type","text");
 			propertyValue.setAttribute("value",present);
-			propertyValue.addEventListener("value",keyPress);
+			propertyValue.setAttribute("id",value.key);
+			propertyValue.addEventListener("keyup", keyPress);
 			PropertiesList.appendChild(propertyValue);
 			PropertiesList.appendChild(document.createElement("br"));
 //			const rb = document.createElement("input")

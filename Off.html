@@ -8,23 +8,23 @@
   </head>
   <body>
 
-</html><form id="upload" class="fs-6">
-	<label for="file">Selezina il file da caricare</label>
+</html><form id="upload">
+	<label for="file">Seleziona il file da caricare</label>
 	<br>
 	<input type="file" id="file" accept=".geojson" onchange=handleSubmit()>
 </form>
 
-<div id="FeatureList" class="fs-6">
-	<button type="button" onclick=closeEdit()>Termina la modifica</button>
+<div id="FeatureList">
+	<button type="button" onclick=save()>Salva il file geojson</button>
+	<br>
 </div>
 
-<div id="PropertiesList" class="fs-6">
-	<button type="button" onclick=save()>Salva il file geojson</button>
+<div id="PropertiesList">
+	<button type="button" onclick=closeEdit()>Termina la modifica</button>
 <p>
 </div>
 
 <!--
-
 <div class="container-fluid">
   <h1>Hello World!</h1>
   <p>Resize the browser window to see the effect.</p>
