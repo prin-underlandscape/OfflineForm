@@ -11,7 +11,14 @@ function processFile (event) {
   FeatureList.appendChild(s);
   geojson.features.forEach( f => { 
     o = document.createElement("option");
-    o.text = f.properties.title;
+    switch (f.properties.ulsp_type) {
+      case "sito":
+        o.text = `Sito ${f.properties.Sito}: ${f.properties.Microtoponimo} (${f.properties.ulsp_type})`;
+        break;
+      default:
+        o.text = `${f.properties.title} (${f.properties.ulsp_type})`;
+        break;
+      }
 		s.add(o);
 	})
   s.size=s.length;
