@@ -1,19 +1,22 @@
-function editFeature (featureEvent) {
+function displayFeature (featureIndex) {
+//    let featureIndex = featureEvent.target.id;
 		let properties = new Format().format("Sito");
 //		console.log(properties.forms[0].formitems);				// Debug
 		function keyPress(propertyEvent) {
-			
-      console.log(propertyEvent);
 		  if (propertyEvent.key == "Enter") {
 				let fieldName = propertyEvent.target.id;
-				console.log(fieldName);
+//				console.log(fieldName);                       //Debug
+//        console.log(geojson.features[featureIndex].properties[fieldName]);      //Debug
+        geojson.features[featureIndex].properties[fieldName] = propertyEvent.target.value;
+//        console.log(geojson.features[featureIndex].properties[fieldName]);      //Debug
+        document.activeElement.blur();
 		  }
     }
 		function display(value,index,array) {
 //			console.log(value);									// Debug
 			let PropertiesList=document.getElementById("PropertiesList");
 			PropertiesList.appendChild(document.createTextNode(value.key));
-			present = geojson.features[event.target.id].properties[value.key];
+			present = geojson.features[featureIndex].properties[value.key];
 			PropertiesList.appendChild(document.createTextNode(": "));
 			let propertyValue = document.createElement("input");
 			propertyValue.setAttribute("type","text");
@@ -29,15 +32,14 @@ function editFeature (featureEvent) {
 //			feature.appendChild(rb);
 //			PropertiesList.appendChild(property);
 		}
-		function closeEdit() {
-			
-		}
 // geojson.features[event.target.id].properties		
-		
+		console.log(featureIndex);
 // Abilita il pannello di editing delle proprietà
-    document.getElementById("PropertiesList").style.display="block";
+    $("#FeatureEditor").show();
+//    document.getElementById("PropertiesList").style.display="block";
 		properties.forms[0].formitems.forEach(display);
 //		save(geojson.features[event.target.id]);
 		document.getElementById("FeatureList").style.display="none";
 //		document.getElementById("upload").style.display="block";
 }
+

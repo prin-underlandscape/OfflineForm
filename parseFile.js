@@ -1,15 +1,4 @@
 function processFile (event) {
-	function list(value,index,array) {
-		const rb = document.createElement("input")
-		rb.setAttribute("type","radio");
-    		rb.id = index;
-    		rb.onclick = editFeature;
-		FeatureList.appendChild(rb);
-		FeatureList.appendChild(document.createTextNode("\t" + value.properties.title));
-		FeatureList.appendChild(document.createElement("br"));
-		
-		console.log(value.properties);
-	}
 // Disabilita il pannello di upload
 	document.getElementById("upload").style.display="none";
 // Abilita il pannello di scelta della feature
@@ -17,5 +6,25 @@ function processFile (event) {
 
 	geojson = JSON.parse(event.target.result);
 	let FeatureList=document.getElementById("FeatureList");
-	geojson.features.forEach(list)
+	
+	let s = document.createElement("SELECT");
+  FeatureList.appendChild(s);
+  geojson.features.forEach( f => { 
+    o = document.createElement("option");
+    o.text = f.properties.title;
+		s.add(o);
+	})
+  s.size=s.length;
+  s.onclick = (event) => {
+    event.preventDefault();
+    displayFeature(s.selectedIndex);
+  }
+}
+
+function closeEdit() {
+// Disabilita il pannello di feature edit
+  $("#FeatureEditor").hide();
+  document.getElementById("PropertiesList").replaceChildren();
+// Abilita il pannello di scelta della feature
+  $("#FeatureList").show();
 }

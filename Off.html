@@ -17,11 +17,15 @@
 <div id="FeatureList">
 	<button type="button" onclick=save()>Salva il file geojson</button>
 	<br>
+	Scegli la feature da modificare:
+	<br>
 </div>
 
-<div id="PropertiesList">
-	<button type="button" onclick=closeEdit()>Termina la modifica</button>
-<p>
+<div id="FeatureEditor">
+  <button type="button" onclick=closeEdit()>Termina la modifica</button>
+  <div id="PropertiesList">
+  <p>
+  </div>
 </div>
 
 <!--
@@ -37,10 +41,14 @@
 </div>
 
 <link rel="stylesheet" href="bootstrap-5.3.0-dist/css/bootstrap.css">
+-->
 
 <script src="jquery-3.7.0.js"></script>
+
+<!--
 <script src="bootstrap-5.3.0-dist/js/bootstrap.js"></script>
 -->
+<script src="save.js"></script>
 <script src="upload.js"></script>
 <script src="parseFile.js"></script>
 <script src="editFeature.js"></script>

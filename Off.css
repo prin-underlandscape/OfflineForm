@@ -1,3 +1,7 @@
 p {
     font-size: 12px;
 }
+
+select{
+    overflow:auto;
+}
