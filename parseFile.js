@@ -32,6 +32,7 @@ function closeEdit() {
 // Disabilita il pannello di feature edit
   $("#FeatureEditor").hide();
   document.getElementById("PropertiesList").replaceChildren();
+  document.getElementById("WrongAttributes").replaceChildren();
 // Abilita il pannello di scelta della feature
   $("#FeatureList").show();
 }

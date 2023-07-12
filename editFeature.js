@@ -70,21 +70,32 @@ function displayFeature (featureIndex) {
 		console.log(featureIndex);
 // Abilita il pannello di editing delle proprietà
     $("#FeatureEditor").show();
+    
 // Genera l'elenco degli attributi da rimuovere, non contenuti nel database Underlandscape    
     let ulspAttributes = properties.forms[0].formitems.map(i => i.key);
     Object.keys(geojson.features[featureIndex].properties).forEach( (inputAttr, index) =>
     {
-      if ( ! ulspAttributes.find( ulspAttr => inputAttr === ulspAttr) )  { 
-        let wrongAttribute = document.createElement("LABEL");
-        wrongAttribute.style.color = "red";
-        wrongAttribute.style.fontSize = "x-small ";
+      if ( ! ulspAttributes.find( ulspAttr => inputAttr === ulspAttr) )  {
+        let keyvalue = document.createElement("LABEL");
+        keyvalue.style.color = "red";
+        keyvalue.style.fontSize = "x-small ";
         val = JSON.stringify(geojson.features[featureIndex].properties[inputAttr]);
-        wrongAttribute.innerHTML = `\t${inputAttr}: ${val}`;
+        keyvalue.innerHTML = `\t${inputAttr}: ${val}`;
         let removeButton = document.createElement("BUTTON");
         removeButton.innerHTML = "Rimuovi";
-        wrongAttributes.appendChild(removeButton);
-        wrongAttributes.appendChild(wrongAttribute);
-        wrongAttributes.appendChild(document.createElement("br"));
+        removeButton.id = inputAttr;
+        removeButton.addEventListener("click", (event) => {
+          console.log(geojson.features[featureIndex].properties[event.target.id]);
+          delete geojson.features[featureIndex].properties[event.target.id];
+          console.log(document.getElementById(inputAttr));
+          document.getElementById(inputAttr).parentNode.style.visibility = "Hidden";
+          document.getElementById(inputAttr).parentNode.style.display = "none";
+        })
+        let wrongAttribute = document.createElement("DIV");
+        let parent = wrongAttributes.appendChild(wrongAttribute);
+        parent.appendChild(removeButton);
+        parent.appendChild(keyvalue);
+        parent.appendChild(document.createElement("br"));
       }
     }
     );
