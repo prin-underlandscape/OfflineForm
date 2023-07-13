@@ -5,3 +5,10 @@ function handleSubmit (event) {
 	reader.onload = processFile;
 	reader.readAsText(document.getElementById("file").files[0]);
 }
+
+function closeFile() {
+	$("#FeatureList").hide();
+	document.getElementById("FeaturesTable").replaceChildren();
+	$("#upload").show();
+	document.getElementById("file").value = "";
+}

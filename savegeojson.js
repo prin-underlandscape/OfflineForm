@@ -1,4 +1,4 @@
-function save() {
+function saveGeoJSON() {
 	const a = document.createElement("a");
 	a.href = URL.createObjectURL(new Blob([JSON.stringify(geojson, null, 2)], {
 	type: "text/plain"
@@ -7,7 +7,4 @@ function save() {
 	document.body.appendChild(a);
 	a.click();
 	document.body.removeChild(a);
-	geojson = {};
-	$("#FeatureList").hide();
-	$("#upload").show();
 }
