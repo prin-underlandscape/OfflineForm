@@ -1,8 +1,7 @@
-function displayFeature (featureIndex) {
-		let properties = new Format().format("Sito");
+function editFeature (featureIndex, typeName) {
+		let properties = new Format().format(typeName);
     let propertiesList=document.getElementById("PropertiesList");
     let wrongAttributes=document.getElementById("WrongAttributes");
-//		console.log(properties.forms[0].formitems);				// Debug
 
 		function editDouble(present,value,index,array) {
 			let propertyValue = document.createElement("TEXTAREA");
@@ -62,7 +61,7 @@ function displayFeature (featureIndex) {
         wrongValue.style.color = "red";
         wrongValue.innerHTML = `\t(${present})`;
         propertiesList.appendChild(wrongValue);
-        console.log(present);
+//        console.log(present);
       }
 		}
     

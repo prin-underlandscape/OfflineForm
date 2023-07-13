@@ -1,6 +1,6 @@
 class Format {
 
-	formats = [ {	
+  formats = [ {	
 	"sectionname": "Sito",
 	"forms": [{
 		"formname": "Scheda Sito",
@@ -429,7 +429,7 @@ class Format {
 	}]
  },
   {
-		"sectionname":"POI"
+		"sectionname":"Foto"
 	},
  {    "sectionname":"Percorso",
       "forms":[{
@@ -587,5 +587,8 @@ class Format {
 
 	format(type) {
 		return this.formats.find(x => x.sectionname === type);
+	}	
+	types() {
+		return this.formats.map(f => f.sectionname);
 	}
 }

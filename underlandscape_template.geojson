@@ -4,7 +4,7 @@
         {
             "type": "Feature",
             "properties": {
-                "ulsp_type": "percorso",
+                "ulsp_type": "Percorso",
                 "time_created": "2023-06-13T13:28:03Z",
                 "title": "Dalla tecchia rapita",
                 "uploaded_gpx_to_osm": null,
@@ -2356,7 +2356,6 @@
         {
             "type": "Feature",
             "properties": {
-                "ulsp_type": "foto",
                 "time_created": "2023-06-13T13:35:48Z",
                 "title": "Colonna",
                 "latitude": 44.123152,
@@ -2382,7 +2381,7 @@
         {
             "type": "Feature",
             "properties": {
-                "ulsp_type": "sito",
+                "ulsp_type": "Sito",
                 "_umap_options": {
                     "popupTemplate": "Default"
                 },
