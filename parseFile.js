@@ -1,3 +1,21 @@
+function featureName(fp) {
+ if ( fp.ulsp_type ) {
+    switch (fp.ulsp_type) {
+      case "Sito":
+        return `Sito ${fp.Sito}: ${fp.Microtoponimo}`;
+        break;
+      case "Percorso":
+        return `${fp.title}`;
+        break;
+      case "Foto":
+        return `${fp.title}`;
+        break;
+    }
+  } else {
+    return `${fp.title}`;
+  };
+}
+
 function processFile (event) {
 // Disabilita il pannello di upload
 	$("#upload").hide();
@@ -5,7 +23,7 @@ function processFile (event) {
 	$("#FeatureList").show();
 
 	geojson = JSON.parse(event.target.result);
-	let FeatureList=document.getElementById("FeatureList");
+	let featuresTable=document.getElementById("FeaturesTable");
   
   geojson.features.forEach( (feature, featureIndex) => {
     let featureTools = document.createElement("DIV"); 
@@ -13,37 +31,20 @@ function processFile (event) {
     let selectType = document.createElement("SELECT");
     let editButton = document.createElement("BUTTON");
     
-    FeatureList.appendChild(featureTools);
-    featureTools.appendChild(name);
-    featureTools.appendChild(selectType);
-    featureTools.appendChild(editButton);
-    
+    let row = featuresTable.appendChild(document.createElement("thead"));
+    row.appendChild(document.createElement("td")).appendChild(name);
+    row.appendChild(document.createElement("td")).appendChild(selectType);
+    row.appendChild(document.createElement("td")).appendChild(editButton);
+
     console.log(geojson.features[featureIndex]);
-    let fs = new Format().types();
+    let fs = formats.types();
     fs.unshift("Non definito");
     let typeIndex = 0;
-    
-//    name.style.color = "red";
+
+    name.innerHTML = featureName(feature.properties);
     if ( feature.properties.ulsp_type ) {
-      switch (feature.properties.ulsp_type) {
-        case "Sito":
-          name.innerHTML = `Sito ${feature.properties.Sito}: ${feature.properties.Microtoponimo}`;
-          break;
-        case "Percorso":
-          name.innerHTML = `${feature.properties.title}`;
-          break;
-        case "Foto":
-          name.innerHTML = `${feature.properties.title}`;
-          break;
-      }
-      name.width = "100px";
       typeIndex = fs.indexOf(feature.properties.ulsp_type);
-      console.log(typeIndex);
-//      name.innerHTML = `${geojson.features[i].properties.title}: `;
-//      document.getElementById("UntypedFeatures").appendChild(name);
-      console.log(fs);				// Debug
     } else {
-      name.innerHTML = `${feature.properties.title} (${feature.properties.ulsp_type})`;
       typeIndex.selectedType = 0;
     };
     
@@ -60,9 +61,12 @@ function processFile (event) {
       if ( fs.indexOf(typeName) != 0) {
         editButton.disabled=false;
         editButton.addEventListener( "click", (event) => {
-          editFeature(featureIndex, typeName);
+          editFeature(featureIndex, geojson.features[featureIndex].properties.ulsp_type);
         })
+      } else {
+        editButton.disabled=true;
       }
+      name.innerHTML = featureName(geojson.features[featureIndex].properties);
       document.activeElement.blur();
     });
 
@@ -72,6 +76,7 @@ function processFile (event) {
       editButton.disabled=true;
     }
     editButton.addEventListener( "click", (event) => {
+      console.log(geojson.features[featureIndex].properties.ulsp_type);
       editFeature(featureIndex, geojson.features[featureIndex].properties.ulsp_type);
     })
   })

@@ -1,5 +1,7 @@
 function editFeature (featureIndex, typeName) {
-		let properties = new Format().format(typeName);
+  console.log(`${featureIndex} + ${typeName}`);
+  console.log(geojson);
+		let properties = formats.format(geojson.features[featureIndex].properties.ulsp_type);
     let propertiesList=document.getElementById("PropertiesList");
     let wrongAttributes=document.getElementById("WrongAttributes");
 
