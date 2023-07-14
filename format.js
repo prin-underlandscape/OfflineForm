@@ -72,25 +72,28 @@ class Format {
                   "item": ""
                 },
                 {
-                  "item": "insediamento civile"
+                  "item": "Frequentazione antropica"
                 },
                 {
-                  "item": "insediamento ecclesiastico"
+                  "item": "Insediamento civile"
                 },
                 {
-                  "item": "insediamento fortificato"
+                  "item": "Insediamento ecclesiastico"
                 },
                 {
-                  "item": "infrastruttura"
+                  "item": "Insediamento fortificato"
                 },
                 {
-                  "item": "struttura devozionale"
+                  "item": "Infrastruttura"
                 },
                 {
-                  "item": "insediamento produttivo"
+                  "item": "Struttura devozionale"
                 },
                 {
-                  "item": "area funeraria"
+                  "item": "Insediamento produttivo"
+                },
+                {
+                  "item": "Area funeraria"
                 },
                 {
                   "item": "ND"
@@ -108,46 +111,46 @@ class Format {
                   "item": ""
                 },
                 {
-                  "item": "corpo di fabbrica"
+                  "item": "Corpo di fabbrica"
                 },
                 {
-                  "item": "complesso architettonico composto da più corpi di fabbrica"
+                  "item": "Complesso architettonico composto da più corpi di fabbrica"
                 },
                 {
-                  "item": "struttura muraura"
+                  "item": "Struttura muraura"
                 },
                 {
-                  "item": "grotta"
+                  "item": "Grotta"
                 },
                 {
-                  "item": "riparo sotto roccia"
+                  "item": "Riparo sotto roccia"
                 },
                 {
-                  "item": "struttura produttiva"
+                  "item": "Struttura produttiva"
                 },
                 {
-                  "item": "viabilità"
+                  "item": "Viabilità"
                 },
                 {
-                  "item": "elemento funzionale"
+                  "item": "Elemento funzionale"
                 },
                 {
-                  "item": "elemento decorativo"
+                  "item": "Elemento decorativo"
                 },
                 {
-                  "item": "elemento devozionale"
+                  "item": "Elemento devozionale"
                 },
                 {
-                  "item": "elemento erratico"
+                  "item": "Elemento erratico"
                 },
                 {
-                  "item": "area di dispersione di materiale"
+                  "item": "Area di dispersione di materiale"
                 },
                 {
-                  "item": "area di concentrazione di materiale"
+                  "item": "Area di concentrazione di materiale"
                 },
                 {
-                  "item": "anomalia morfologica"
+                  "item": "Anomalia morfologica"
                 }
               ]
             },
@@ -292,7 +295,7 @@ class Format {
             "type": "stringcombo"
           },
           {
-            "key": "Reperti Ceramici",
+            "key": "Reperti ceramici",
             "values": {
               "items": [
                 {
