@@ -5,14 +5,14 @@ function featureName(fp) {
         return `Sito ${fp.Sito}: ${fp.Microtoponimo}`;
         break;
       case "Percorso":
-        return `${fp.title}`;
+        return `${fp.Titolo}`;
         break;
       case "Foto":
-        return `${fp.title}`;
+        return `${fp.Titolo}`;
         break;
     }
   } else {
-    return `${fp.title}`;
+    return `${fp.Titolo}`;
   };
 }
 
@@ -60,9 +60,9 @@ function processFile (event) {
       geojson.features[featureIndex].properties.ulsp_type = typeName;
       if ( fs.indexOf(typeName) != 0) {
         editButton.disabled=false;
-        editButton.addEventListener( "click", (event) => {
-          editFeature(featureIndex, geojson.features[featureIndex].properties.ulsp_type);
-        })
+ //       editButton.addEventListener( "click", (event) => {
+ //         editFeature(featureIndex, geojson.features[featureIndex].properties.ulsp_type);
+ //       })
       } else {
         editButton.disabled=true;
       }
@@ -77,7 +77,8 @@ function processFile (event) {
     }
     editButton.addEventListener( "click", (event) => {
       console.log(geojson.features[featureIndex].properties.ulsp_type);
-      editFeature(featureIndex, geojson.features[featureIndex].properties.ulsp_type);
+ //     editFeature(featureIndex, geojson.features[featureIndex].properties.ulsp_type);
+    editFeature(featureIndex);
     })
   })
 }

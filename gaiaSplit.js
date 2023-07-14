@@ -8,7 +8,6 @@ function savePath() {
 	a.click();
 	document.body.removeChild(a);
 }
-
   
 function processFile (event) {
 // Disabilita il pannello di upload
@@ -20,7 +19,7 @@ function processFile (event) {
 	geojson = JSON.parse(event.target.result);
   console.log(geojson);
   
-  geojson.features.forEach( feature => {//let featureTools = document.createElement("DIV"); 
+  geojson.features.forEach( feature => { 
     let name = document.createElement("LABEL"); 
     let link = document.createElement("A");
     let thumbnail = document.createElement("IMG");
@@ -35,8 +34,11 @@ function processFile (event) {
         properties: { }
       }
       foto.properties.ulsp_type = "Foto";
-      foto.properties.url = feature.properties.photos[0].fullsize_url;
-      foto.properties.title = feature.properties.photos[0].title;
+      foto.properties.URL = feature.properties.photos[0].fullsize_url;
+      foto.properties.Titolo = feature.properties.photos[0].title;
+      foto.properties.Data = feature.properties.photos[0].time_created.split("T")[0];
+      foto.properties.Ora = feature.properties.photos[0].time_created.split("T")[1];
+      foto.properties.Strumento = source;
       output.features.push(foto);
       
       row.appendChild(document.createElement("td")).appendChild(thumbnail);
@@ -58,7 +60,15 @@ function processFile (event) {
         properties: { }
       };
       path.properties.ulsp_type = "Percorso";
-      path.properties.title = feature.properties.title;
+      path.properties.Titolo = feature.properties.title;
+      path.properties.Data = feature.properties.photos[0].time_created.split("T")[0];
+      path.properties.Ora = feature.properties.photos[0].time_created.split("T")[1];
+      path.properties.Strumento = feature.properties.source;
+      path.properties.Lunghezza = feature.properties.distance;
+      path.properties.Durata = feature.properties.moving_time;
+      path.properties.Salita = feature.properties.total_ascent;
+      path.properties.Discesa = feature.properties.total_descent;
+      source = feature.properties.source;
       output.features.push(path);
       
       document.getElementById("titolo").innerHTML = feature.properties.title;
@@ -82,6 +92,7 @@ function closeEdit() {
 
 
 let geojson = {};
+let source = "";
 let output = {
 	type: "FeatureCollection",
   features: []

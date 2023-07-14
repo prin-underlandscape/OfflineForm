@@ -20,6 +20,11 @@ class Format {
             "type": "string"
           },
           {
+            "key": "Titolo",
+            "value": "",
+            "type": "string"
+          },
+          {
             "key": "Provincia",
             "value": "",
             "type": "string"
@@ -454,10 +459,25 @@ class Format {
     "sectionname": "Foto",
     "forms": [
       {
-        "formname": "Percorso",
+        "formname": "Foto",
         "formitems": [
           {
             "key": "ulsp_type",
+            "value": "",
+            "type": "string"
+          },
+          {
+            "key": "Titolo",
+            "value": "",
+            "type": "string"
+          },
+          {
+            "key": "Tag Google",
+            "value": "",
+            "type": "string"
+          },
+          {
+            "key": "URL",
             "value": "",
             "type": "string"
           },
@@ -467,122 +487,22 @@ class Format {
             "type": "string"
           },
           {
-            "key": "Comune",
-            "value": "",
-            "type": "string"
-          },
-          {
-            "key": "Definizione percorso",
-            "value": "",
-            "type": "string"
-          },
-          {
-            "key": "Punto d'accesso",
-            "value": "",
-            "type": "string"
-          },
-          {
-            "key": "Foto accesso",
-            "label": "Foto",
-            "value": "",
-            "type": "pictures"
-          },
-          {
             "key": "Descrizione",
             "value": "",
             "type": "string"
           },
           {
-            "key": "Difficoltà",
-            "values": {
-              "items": [
-                {
-                  "item": ""
-                },
-                {
-                  "item": "Facile"
-                },
-                {
-                  "item": "Media difficoltà"
-                },
-                {
-                  "item": "Difficile"
-                }
-              ]
-            },
-            "value": "",
-            "type": "stringcombo"
-          },
-          {
-            "key": "Dislivello metri",
-            "value": "",
-            "type": "integer"
-          },
-          {
-            "key": "Segnaletica",
-            "values": {
-              "items": [
-                {
-                  "item": ""
-                },
-                {
-                  "item": "Congruente"
-                },
-                {
-                  "item": "Assente"
-                },
-                {
-                  "item": "Non sufficiente"
-                }
-              ]
-            },
-            "value": "",
-            "type": "stringcombo"
-          },
-          {
-            "key": "Copertura GPS",
-            "values": {
-              "items": [
-                {
-                  "item": ""
-                },
-                {
-                  "item": "Completa"
-                },
-                {
-                  "item": "Parziale"
-                },
-                {
-                  "item": "Assente"
-                }
-              ]
-            },
-            "value": "",
-            "type": "stringcombo"
-          },
-          {
-            "key": "Copertura rete mobile",
-            "values": {
-              "items": [
-                {
-                  "item": ""
-                },
-                {
-                  "item": "Completa"
-                },
-                {
-                  "item": "Parziale"
-                },
-                {
-                  "item": "Assente"
-                }
-              ]
-            },
-            "value": "",
-            "type": "stringcombo"
-          },
-          {
             "key": "Note",
+            "value": "",
+            "type": "string"
+          },
+          {
+            "key": "Autore",
+            "value": "",
+            "type": "string"
+          },
+          {
+            "key": "Strumento",
             "value": "",
             "type": "string"
           },
@@ -595,16 +515,6 @@ class Format {
             "key": "Ora",
             "value": "",
             "type": "time"
-          },
-          {
-            "key": "LONGITUDE",
-            "value": "",
-            "type": "double"
-          },
-          {
-            "key": "LATITUDE",
-            "value": "",
-            "type": "double"
           }
         ]
       }
@@ -622,6 +532,11 @@ class Format {
             "type": "string"
           },
           {
+            "key": "Titolo",
+            "value": "",
+            "type": "string"
+          },
+          {
             "key": "Provincia",
             "value": "",
             "type": "string"
@@ -674,7 +589,22 @@ class Format {
             "type": "stringcombo"
           },
           {
-            "key": "Dislivello metri",
+            "key": "Lunghezza",
+            "value": "",
+            "type": "integer"
+          },
+          {
+            "key": "Durata",
+            "value": "",
+            "type": "integer"
+          },
+          {
+            "key": "Salita",
+            "value": "",
+            "type": "integer"
+          },
+          {
+            "key": "Discesa",
             "value": "",
             "type": "integer"
           },
@@ -740,6 +670,11 @@ class Format {
             },
             "value": "",
             "type": "stringcombo"
+          },
+          {
+            "key": "Strumento",
+            "value": "",
+            "type": "string"
           },
           {
             "key": "Note",

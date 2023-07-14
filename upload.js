@@ -11,4 +11,5 @@ function closeFile() {
 	document.getElementById("FeaturesTable").replaceChildren();
 	$("#upload").show();
 	document.getElementById("file").value = "";
+	geojson = {};
 }

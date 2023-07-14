@@ -88,7 +88,7 @@ function saveUmap() {
           "popupTemplate": "Table",
           "popupContentTemplate": `
 # SITO {Sito}
-{{https://drive.google.com/uc?id={Foto}|300}}
+{{https://drive.google.com/uc?id={Tag Google}|300}}
 ## {name} ( [[https://sites.google.com/view/prin-underlandscape/home-page/attivit%C3%A0-sul-campo/{Link}|link]])
 {description}
 ---

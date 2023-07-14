@@ -1,4 +1,5 @@
-function editFeature (featureIndex, typeName) {
+function editFeature (featureIndex) {
+  typeName = geojson.features[featureIndex].properties.ulsp_type;
   console.log(`${featureIndex} + ${typeName}`);
   console.log(geojson);
 	let properties = formats.format(geojson.features[featureIndex].properties.ulsp_type);
@@ -74,6 +75,7 @@ function editFeature (featureIndex, typeName) {
     
 // Genera l'elenco degli attributi da rimuovere, non contenuti nel database Underlandscape    
     let ulspAttributes = properties.forms[0].formitems.map(i => i.key);
+    console.log(geojson.features[featureIndex].properties);
     Object.keys(geojson.features[featureIndex].properties).forEach( (inputAttr, index) =>
     {
       if ( ! ulspAttributes.find( ulspAttr => inputAttr === ulspAttr) )  {
@@ -114,6 +116,7 @@ function editFeature (featureIndex, typeName) {
           case "string": 
           case "date": 
           case "time": 
+          case "pictures":
             editString(present,value,index,array);
             break;
           case "stringcombo": 
