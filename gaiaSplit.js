@@ -28,29 +28,31 @@ function processFile (event) {
     let row = featuresTable.appendChild(document.createElement("thead"));
     switch ( feature.geometry.type ) {
     case "Point":
-      let foto =  {
-        type: "Feature",
-        geometry: feature.geometry,
-        properties: { }
+      if ( feature.properties.attr === "photo" ) {
+        let foto =  {
+          type: "Feature",
+          geometry: feature.geometry,
+          properties: { }
+        }
+        foto.properties.ulsp_type = "Foto";
+        foto.properties.URL = feature.properties.photos[0].fullsize_url;
+        foto.properties.Titolo = feature.properties.photos[0].title;
+        foto.properties.Data = feature.properties.photos[0].time_created.split("T")[0];
+        foto.properties.Ora = feature.properties.photos[0].time_created.split("T")[1];
+        foto.properties.Strumento = source;
+        output.features.push(foto);
+        
+        row.appendChild(document.createElement("td")).appendChild(thumbnail);
+        row.appendChild(document.createElement("td")).appendChild(link);
+        row.appendChild(document.createElement("td")).appendChild(name);
+        name.innerHTML = feature.properties.photos[0].title;
+        thumbnail.src = feature.properties.photos[0].thumbnail_url;
+        thumbnail.alt = "Foto non più disponibile. Ripeti il download da GaiaGPS";
+        downloadButton.innerHTML = "Download";
+        link.href = feature.properties.photos[0].fullsize_url;
+        link.alt = "Foto non più disponibile. Ripeti il download da GaiaGPS";
+        link.innerHTML = "link";
       }
-      foto.properties.ulsp_type = "Foto";
-      foto.properties.URL = feature.properties.photos[0].fullsize_url;
-      foto.properties.Titolo = feature.properties.photos[0].title;
-      foto.properties.Data = feature.properties.photos[0].time_created.split("T")[0];
-      foto.properties.Ora = feature.properties.photos[0].time_created.split("T")[1];
-      foto.properties.Strumento = source;
-      output.features.push(foto);
-      
-      row.appendChild(document.createElement("td")).appendChild(thumbnail);
-      row.appendChild(document.createElement("td")).appendChild(link);
-      row.appendChild(document.createElement("td")).appendChild(name);
-      name.innerHTML = feature.properties.photos[0].title;
-      thumbnail.src = feature.properties.photos[0].thumbnail_url;
-      thumbnail.alt = "Foto non più disponibile. Ripeti il download da GaiaGPS";
-      downloadButton.innerHTML = "Download";
-      link.href = feature.properties.photos[0].fullsize_url;
-      link.alt = "Foto non più disponibile. Ripeti il download da GaiaGPS";
-      link.innerHTML = "link";
       break;
       
     case "MultiLineString":
@@ -59,15 +61,16 @@ function processFile (event) {
         geometry: feature.geometry,
         properties: { }
       };
+      console.log(feature.properties);
       path.properties.ulsp_type = "Percorso";
       path.properties.Titolo = feature.properties.title;
-      path.properties.Data = feature.properties.photos[0].time_created.split("T")[0];
-      path.properties.Ora = feature.properties.photos[0].time_created.split("T")[1];
+      path.properties.Data = feature.properties.time_created.split("T")[0];
+      path.properties.Ora = feature.properties.time_created.split("T")[1];
       path.properties.Strumento = feature.properties.source;
       path.properties.Lunghezza = feature.properties.distance;
       path.properties.Durata = feature.properties.moving_time;
-      path.properties.Salita = feature.properties.total_ascent;
-      path.properties.Discesa = feature.properties.total_descent;
+      path.properties["Dislivello in salita"] = feature.properties.total_ascent;
+      path.properties["Dislivello in discesa"] = feature.properties.total_descent;
       source = feature.properties.source;
       output.features.push(path);
       

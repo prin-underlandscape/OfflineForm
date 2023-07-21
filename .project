@@ -20,13 +20,28 @@ indent_mode=2
 [project]
 name=OfflineForm
 base_path=/home/augusto/Documenti/Collaborazioni/202110-PRIN_Underlandscape/OfflineForm
+description=
 
 [long line marker]
 long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=-1
+current_page=13
+FILE_NAME_0=470;Javascript;0;EUTF-8;1;1;1;%2Fhome%2Faugusto%2FDocumenti%2FCollaborazioni%2F202110-PRIN_Underlandscape%2FOfflineForm%2Fupload.js;0;4
+FILE_NAME_1=289;Javascript;0;EUTF-8;1;1;1;%2Fhome%2Faugusto%2FDocumenti%2FCollaborazioni%2F202110-PRIN_Underlandscape%2FOfflineForm%2Fsavegeojson.js;0;4
+FILE_NAME_2=4094;Javascript;0;EUTF-8;0;0;1;%2Fhome%2Faugusto%2FDocumenti%2FCollaborazioni%2F202110-PRIN_Underlandscape%2FOfflineForm%2Fsaveumap.js;0;2
+FILE_NAME_3=717;HTML;0;EUTF-8;1;1;1;%2Fhome%2Faugusto%2FDocumenti%2FCollaborazioni%2F202110-PRIN_Underlandscape%2FOfflineForm%2FgaiaSplit.html;0;4
+FILE_NAME_4=3433;Javascript;0;EUTF-8;0;1;1;%2Fhome%2Faugusto%2FDocumenti%2FCollaborazioni%2F202110-PRIN_Underlandscape%2FOfflineForm%2FgaiaSplit.js;0;2
+FILE_NAME_5=0;HTML;0;EUTF-8;1;1;1;%2Fhome%2Faugusto%2FDocumenti%2FCollaborazioni%2F202110-PRIN_Underlandscape%2FOfflineForm%2FOff.html;0;4
+FILE_NAME_6=21;CSS;0;EUTF-8;1;1;1;%2Fhome%2Faugusto%2FDocumenti%2FCollaborazioni%2F202110-PRIN_Underlandscape%2FOfflineForm%2FOff.css;0;4
+FILE_NAME_7=45;Javascript;0;EUTF-8;0;1;1;%2Fhome%2Faugusto%2FDocumenti%2FCollaborazioni%2F202110-PRIN_Underlandscape%2FOfflineForm%2FeditFeature.js;0;2
+FILE_NAME_8=16682;Javascript;0;EUTF-8;1;1;1;%2Fhome%2Faugusto%2FDocumenti%2FCollaborazioni%2F202110-PRIN_Underlandscape%2FOfflineForm%2Fformat.js;0;4
+FILE_NAME_9=102;None;0;EUTF-8;1;1;1;%2Fhome%2Faugusto%2FDocumenti%2FCollaborazioni%2F202110-PRIN_Underlandscape%2FOfflineForm%2FTODO.txt;0;4
+FILE_NAME_10=2134;Javascript;0;EUTF-8;1;1;1;%2Fhome%2Faugusto%2FDocumenti%2FCollaborazioni%2F202110-PRIN_Underlandscape%2FOfflineForm%2FparseFile.js;0;4
+FILE_NAME_11=0;None;0;EUTF-8;1;1;1;%2Fhome%2Faugusto%2FDocumenti%2FCollaborazioni%2F202110-PRIN_Underlandscape%2FOfflineForm%2Funderlandscape_template.geojson;0;4
+FILE_NAME_12=16077;JSON;0;EUTF-8;1;1;1;%2Fhome%2Faugusto%2FDocumenti%2FCollaborazioni%2F202110-PRIN_Underlandscape%2FOfflineForm%2Ftags.json;0;4
+FILE_NAME_13=0;Sh;0;EUTF-8;1;1;1;%2Fhome%2Faugusto%2FDocumenti%2FCollaborazioni%2F202110-PRIN_Underlandscape%2Fqr-code%2Fgenera.sh;0;4
 
 [VTE]
 last_dir=/home/augusto
