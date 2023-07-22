@@ -1,6 +1,7 @@
 class Format {
 
-  formats = [
+  formats =
+[
   {
     "sectionname": "Sito",
     "forms": [
@@ -11,7 +12,7 @@ class Format {
             "key": "Sito",
             "value": "",
             "islabel": "true",
-            "type": "integer",
+            "type": "string",
             "mandatory": "yes"
           },
           {
@@ -46,16 +47,6 @@ class Format {
           },
           {
             "key": "Altitudine",
-            "value": "",
-            "type": "double"
-          },
-          {
-            "key": "LONGITUDE",
-            "value": "",
-            "type": "double"
-          },
-          {
-            "key": "LATITUDE",
             "value": "",
             "type": "double"
           },
@@ -175,58 +166,70 @@ class Format {
                   "item": ""
                 },
                 {
-                  "item": "Preistoria"
+                  "item": "Preistoria (2.5 milioni-3000 anni fa)"
                 },
                 {
-                  "item": "Protostoria"
+                  "item": "Paleolitico (2.5 milioni-11.000 anni fa)"
                 },
                 {
-                  "item": "Età del bronzo"
+                  "item": "Paleolitico inferiore (2.5 milioni-120.000 anni fa)"
                 },
                 {
-                  "item": "Età del ferro"
+                  "item": "Paleolitico medio (120.000-36.000 anni fa)"
                 },
                 {
-                  "item": "Periodo preromano"
+                  "item": "Paleolitico superiore (36.000-11.000 anni fa)"
                 },
                 {
-                  "item": "Periodo etrusco"
+                  "item": "Neolitico (11.000-3500 a.C.)"
                 },
                 {
-                  "item": "Periodo ligure"
+                  "item": "Eneolitico (3500-2300 a.C.)"
                 },
                 {
-                  "item": "Età romana repubblicana"
+                  "item": "Protostoria (2300-720 a.C.)"
                 },
                 {
-                  "item": "Età romana imperiale"
+                  "item": "Età del bronzo (2300-950 a.C.)"
                 },
                 {
-                  "item": "Alto medioevo"
+                  "item": "Età del ferro (950-720 a.C.)"
                 },
                 {
-                  "item": "Basso medioevo"
+                  "item": "Civiltà preromane (720- 89 a.C.)"
                 },
                 {
-                  "item": "Età moderna"
+                  "item": "Età romana repubblicana (509-27 a.C.)"
                 },
                 {
-                  "item": "Prima età moderna"
+                  "item": "Età romana imperiale (27 a.C.- 476 d.C.)"
                 },
                 {
-                  "item": "Tarda età moderna"
+                  "item": "Età tardoantica (476-700 d.C.)"
                 },
                 {
-                  "item": "Età contemporanea"
+                  "item": "Alto medioevo (700-1000 d.C.)"
                 },
                 {
-                  "item": "Età subcontemporanea"
+                  "item": "Basso medioevo (1000-1492 d.C.)"
                 },
                 {
-                  "item": "Età subattuale"
+                  "item": "Età moderna (1492-1789 d.C.)"
                 },
                 {
-                  "item": "Età attuale"
+                  "item": "Prima età moderna (1492-1600 d.C.)"
+                },
+				{
+                  "item": "Tarda età moderna (1600-1789 d.C.)"
+                },
+				{
+                  "item": "Età contemporanea (1789-2000 d.C.)"
+                },
+                {
+                  "item": "Età subattuale (2000-oggi)"
+                },
+				{
+                  "item": "ND (Non determinata)"
                 }
               ]
             },
@@ -241,58 +244,70 @@ class Format {
                   "item": ""
                 },
                 {
-                  "item": "Preistoria"
+                  "item": "Preistoria (2.5 milioni-3000 anni fa)"
                 },
                 {
-                  "item": "Protostoria"
+                  "item": "Paleolitico (2.5 milioni-11.000 anni fa)"
                 },
                 {
-                  "item": "Età del bronzo"
+                  "item": "Paleolitico inferiore (2.5 milioni-120.000 anni fa)"
                 },
                 {
-                  "item": "Età del ferro"
+                  "item": "Paleolitico medio (120.000-36.000 anni fa)"
                 },
                 {
-                  "item": "Periodo preromano"
+                  "item": "Paleolitico superiore (36.000-11.000 anni fa)"
                 },
                 {
-                  "item": "Periodo etrusco"
+                  "item": "Neolitico (11.000-3500 a.C.)"
                 },
                 {
-                  "item": "Periodo ligure"
+                  "item": "Eneolitico (3500-2300 a.C.)"
                 },
                 {
-                  "item": "Età romana repubblicana"
+                  "item": "Protostoria (2300-720 a.C.)"
                 },
                 {
-                  "item": "Età romana imperiale"
+                  "item": "Età del bronzo (2300-950 a.C.)"
                 },
                 {
-                  "item": "Alto medioevo"
+                  "item": "Età del ferro (950-720 a.C.)"
                 },
                 {
-                  "item": "Basso medioevo"
+                  "item": "Civiltà preromane (720- 89 a.C.)"
                 },
                 {
-                  "item": "Età moderna"
+                  "item": "Età romana repubblicana (509-27 a.C.)"
                 },
                 {
-                  "item": "Prima età moderna"
+                  "item": "Età romana imperiale (27 a.C.- 476 d.C.)"
                 },
                 {
-                  "item": "Tarda età moderna"
+                  "item": "Età tardoantica (476-700 d.C.)"
                 },
                 {
-                  "item": "Età contemporanea"
+                  "item": "Alto medioevo (700-1000 d.C.)"
                 },
                 {
-                  "item": "Età subcontemporanea"
+                  "item": "Basso medioevo (1000-1492 d.C.)"
                 },
                 {
-                  "item": "Età subattuale"
+                  "item": "Età moderna (1492-1789 d.C.)"
                 },
                 {
-                  "item": "Età attuale"
+                  "item": "Prima età moderna (1492-1600 d.C.)"
+                },
+				{
+                  "item": "Tarda età moderna (1600-1789 d.C.)"
+                },
+				{
+                  "item": "Età contemporanea (1789-2000 d.C.)"
+                },
+                {
+                  "item": "Età subattuale (2000-oggi)"
+                },
+				{
+                  "item": "ND (Non determinata)"
                 }
               ]
             },
@@ -482,17 +497,7 @@ class Format {
             "type": "string"
           },
           {
-            "key": "Provincia",
-            "value": "",
-            "type": "string"
-          },
-          {
             "key": "Descrizione",
-            "value": "",
-            "type": "string"
-          },
-          {
-            "key": "Note",
             "value": "",
             "type": "string"
           },
@@ -547,11 +552,6 @@ class Format {
             "type": "string"
           },
           {
-            "key": "Definizione percorso",
-            "value": "",
-            "type": "string"
-          },
-          {
             "key": "Punto d'accesso",
             "value": "",
             "type": "string"
@@ -599,12 +599,12 @@ class Format {
             "type": "integer"
           },
           {
-            "key": "Salita",
+            "key": "Dislivello in salita",
             "value": "",
             "type": "integer"
           },
           {
-            "key": "Discesa",
+            "key": "Dislivello in discesa",
             "value": "",
             "type": "integer"
           },
@@ -677,11 +677,6 @@ class Format {
             "type": "string"
           },
           {
-            "key": "Note",
-            "value": "",
-            "type": "string"
-          },
-          {
             "key": "Data",
             "value": "",
             "type": "date"
@@ -690,22 +685,13 @@ class Format {
             "key": "Ora",
             "value": "",
             "type": "time"
-          },
-          {
-            "key": "LONGITUDE",
-            "value": "",
-            "type": "double"
-          },
-          {
-            "key": "LATITUDE",
-            "value": "",
-            "type": "double"
           }
         ]
       }
     ]
   }
-];
+]
+;
 
   constructor() {
   }
