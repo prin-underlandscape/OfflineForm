@@ -1,16 +1,22 @@
 # Offline Form-based GeoJSON compiler
 
-The tool is designed to simplify the editing of GeoJSON features that must comply with a given content description. The tool allows to define, for each feature, the user-defined type of the content (not the GeoJSON feature *type*), and edit the *properties* object of the feature according with a user-defined content definition. The above description are provided by the user in a *format* JSON object.
+The tool is designed to simplify the editing of GeoJSON features that must comply with a given content description. 
+
+## Usage
+
+The tool allows to define, for each feature, the user-defined type of the content (not the GeoJSON feature *type*), and edit the *properties* object of the feature according with a user-defined content definition. The above description are provided by the user in a *format* JSON object.
 
 Once defined the *format* object, the user uploads to the tool the GeoJSON file to edit. The interface presents a dialog showing a line for each of the *features* in the uploaded file. If the type of the feature is not defined is not defined in the file, the user is presented with a list of defined types to choose from. Once the type is defined, the user is presented with a list of attribute names: some are defined in the file, but unnecessary according with the defined form, other are necessary and defined, others are necessary but undefined. The user can remove the unnecessary ones, edit the value of the needed ones.
 
 After editing the features in FeatureCollection the user can save the file as a GeoJSON file containing the FeatureCollection, or as a *uMap* file framed in a uMap template file.
 
-## Building a forms file
+### Building a forms file
 
 A form file contain an array of forms, each of which is an object describing the required attributes of a Feature user-defined type. The user-defined type is indicated in the *formname* attribute.
 
 A form has another *formItems* array attribute containing one object for each of the required attributes of the user-defined type. Each object has an *itemname* string attribute for the name of the attribute in the feature, a *value* string attribute specifying the default value of the attribute in the feature, and the *type*. This latter is a string in the range *string*, *integer*, *double*, *date*, *time*, *pictures*, *stringcombo*.
+
+## Implementation details
 
 A GeoJSON object is a JSON object containing geo-spatial data. A GeoJSON object has a *type* attribute (or *member*) which is one of *Feature*, *FeatureCollection*, or one of the geometries *Point*, *MultiPoint*, *LineString*, *MultiLineString*, *Polygon*, *MultiPolygon*, and *GeometryCollection*. The *Off.html* tool manipulates an object containing a *FeatureCollection*.
 
