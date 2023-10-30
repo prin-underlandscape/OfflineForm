@@ -1,22 +1,21 @@
-function featureName(fp) {
- if ( fp.ulsp_type ) {
-    switch (fp.ulsp_type) {
-      case "Sito":
-        return `Sito ${fp.Sito}: ${fp.Microtoponimo}`;
-        break;
-      case "Percorso":
-        return `${fp.Titolo}`;
-        break;
-      case "Foto":
-        return `${fp.Titolo}`;
-        break;
-    }
-  } else {
-    return `${fp.Titolo}`;
-  };
-}
-
 function processFile (event) {
+  function featureName(fp) {
+    if ( fp.ulsp_type ) {
+      switch (fp.ulsp_type) {
+        case "Sito":
+          return `Sito ${fp.Sito}: ${fp.Microtoponimo}`;
+          break;
+        case "Percorso":
+          return `${fp.Titolo}`;
+          break;
+        case "Foto":
+          return `${fp.Titolo}`;
+          break;
+      }
+    } else {
+      return `${fp.Titolo}`;
+    };
+  } // end function
 // Disabilita il pannello di upload
 	$("#upload").hide();
 // Abilita il pannello di scelta della feature
@@ -77,8 +76,8 @@ function processFile (event) {
     }
     editButton.addEventListener( "click", (event) => {
       console.log(geojson.features[featureIndex].properties.ulsp_type);
- //     editFeature(featureIndex, geojson.features[featureIndex].properties.ulsp_type);
-    editFeature(featureIndex);
+//     editFeature(featureIndex, geojson.features[featureIndex].properties.ulsp_type);
+      editFeature(featureIndex);
     })
   })
 }

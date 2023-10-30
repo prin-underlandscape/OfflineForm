@@ -6,36 +6,29 @@
     <link rel="stylesheet" href="Off.css">
     <title>Offline GeoJSON editor fo Underlandscape</title>
   </head>
+  
   <body>
-
-</html><form id="upload">
-	<label for="file">Seleziona il file da caricare</label>
-	<br>
-	<input type="file" id="file" accept=".geojson" onchange=handleSubmit()>
-</form>
-
-<div id="FeatureList" hidden >
-	Scegli la feature da modificare:
-	<br>
-	<table id="FeaturesTable">
-	
-	</table>
-	<button type="button" onclick=saveGeoJSON()>Salva un file GeoJSON</button>
-	<button type="button" onclick=saveUmap()>Salva una mappa umap</button>
-	<button type="button" onclick=closeFile()>Chiudi il file (senza salvare)</button>
-</div>
-
-
-<div id="FeatureEditor" hidden>
-  <button type="button" onclick=closeEdit()>Termina la modifica</button>
-  <br>Questi sono campi non definiti nel database: andrebbero rimossi<br>
-  <div id="WrongAttributes"> </div>
-  Questi sono campi che possono essere modificati<br>
-  <div id="PropertiesList"> </div>
-  <p>
-  </div>
-</div>
-
+    <form id="upload">
+      <label for="file">Seleziona il file da caricare</label>
+      <br>
+      <input type="file" id="file" accept=".geojson" onchange=handleSubmit()>
+    </form>
+    <div id="FeatureList" hidden >
+      Scegli la feature da modificare: <br>
+      <table id="FeaturesTable"></table>
+      <button type="button" onclick=saveGeoJSON()>Salva un file GeoJSON</button>
+      <button type="button" onclick=saveUmap()>Salva una mappa umap</button>
+      <button type="button" onclick=closeFile()>Chiudi il file (senza salvare)</button>
+    </div>
+    <div id="FeatureEditor" hidden>
+      <button type="button" onclick=closeEdit()>Termina la modifica</button>
+      <br>Questi sono campi non definiti nel database: andrebbero rimossi<br>
+      <div id="WrongAttributes"> </div>
+      Questi sono campi che possono essere modificati<br>
+      <div id="PropertiesList"> </div>
+      <p>
+    </div>
+    
 <!--
 <div class="container-fluid">
   <h1>Hello World!</h1>
@@ -51,17 +44,15 @@
 <link rel="stylesheet" href="bootstrap-5.3.0-dist/css/bootstrap.css">
 -->
 
-<script src="jquery-3.7.0.js"></script>
-<!--
-<script src="bootstrap-5.3.0-dist/js/bootstrap.js"></script>
--->
-<script src="format.js"></script>
-<script src="savegeojson.js"></script>
-<script src="saveumap.js"></script>
-<script src="upload.js"></script>
-<script src="parseFile.js"></script>
-<script src="editFeature.js"></script>
-<script src="Off.js"></script>
+    <script src="jquery-3.7.0.js"></script>
+    <script src="format.js"></script>
+    <script src="savegeojson.js"></script>
+    <script src="saveumap.js"></script>
+    <script src="upload.js"></script>
+    <script src="parseFile.js"></script>
+    <script src="editFeature.js"></script>
+    <script src="Off.js"></script>
 
-</body>
+  </body>
 
+</html>
