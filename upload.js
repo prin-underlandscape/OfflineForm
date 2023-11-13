@@ -7,9 +7,9 @@ function handleSubmit (event) {
 }
 
 function closeFile() {
-	$("#FeatureList").hide();
+	document.getElementById("FeatureList").style.display="none";
 	document.getElementById("FeaturesTable").replaceChildren();
-	$("#upload").show();
+	document.getElementById("upload").style.display="block";
 	document.getElementById("file").value = "";
 	geojson = {};
 }
