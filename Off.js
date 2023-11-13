@@ -90,6 +90,63 @@ function processFile (event) {
   })
 }
 
+// La funzione risponde al tasto "Salva un file geoJSON"
+// Funziona creando un elemento "anchor" con la modalità download
+// di HTML5. Il link corrisponde ad un blob che contiene il geojson
+// convertito in JSON
+function saveGeoJSON() {
+	const a = document.createElement("a");
+	a.href = URL.createObjectURL(
+      new Blob([JSON.stringify(geojson, null, 2)], {type: "text/plain"}
+   ));
+	a.setAttribute("download", "data.geojson");
+	document.body.appendChild(a);
+	a.click();
+	document.body.removeChild(a);
+}
+
+// Prepara un file umap con le features contenute nella variabile
+// geojson.
+// Il procedimento non è valido perchè il template si riferisce ad una
+// mappa (vedi campo "uri") e quindi si continua a produrre la stessa
+// mappa. Sarebbe meglio utilizzare un umap caricato all'inizio della
+// sessione ed impostare solo i campi definiti nel template
+// La tecnica per il salvataggio del file è analoga a quella di
+// savegeojson
+function saveUmap() {
+  let allowedTypes = umap.layers.map( l => l._umap_options.name );
+  console.log(allowedTypes);
+//  percorsi.features.push(lxpercorso);
+//  foto.features.push(lxfoto);
+//  siti.features.push(lxsito);
+
+  geojson.features.map( feature => {
+    console.log(feature.properties.ulsp_type);
+    if ( allowedTypes.includes(feature.properties.ulsp_type) ) {
+      feature.properties._umap_options = {};
+      feature.properties._umap_options.popupTemplate = "Default";
+      let layer = umap.layers.find(l => l._umap_options.name === feature.properties.ulsp_type);
+      layer.features.push(feature);
+    }
+  });
+
+  console.log(geojson);
+
+	const a = document.createElement("a");
+	a.href = URL.createObjectURL(new Blob([JSON.stringify(umap, null, 2)], {
+	type: "text/plain"
+	}));
+	a.setAttribute("download", "map.umap");
+	document.body.appendChild(a);
+	a.click();
+	document.body.removeChild(a);
+
+
+	//$("#FeatureList").hide();
+	//$("#upload").show();
+}
+
+
 // La funzione risponde al tasto "Chiudi il file".
 // Si limita a gestire l'interfaccia chiudendo l'interfaccia di editing 
 function closeEdit() {

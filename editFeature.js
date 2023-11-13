@@ -73,7 +73,7 @@ console.log(properties);
 // geojson.features[event.target.id].properties		
   console.log(featureIndex);
 // Abilita il pannello di editing delle proprietà
-  $("#FeatureEditor").show();
+  document.getElementById("FeatureEditor").style.display = "block";
     
 // Genera l'elenco degli attributi da rimuovere, non contenuti nel database Underlandscape    
   let ulspAttributes = properties.formitems.map(i => i.key);
@@ -134,7 +134,7 @@ console.log(properties);
     PropertiesList.appendChild(document.createElement("br"));
   }
   });
-  $("#FeatureList").hide();
+  document.getElementById("FeatureList").style.display = "none";
 //		document.getElementById("upload").style.display="block";
 }
 
