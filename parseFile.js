@@ -36,7 +36,7 @@ function processFile (event) {
     row.appendChild(document.createElement("td")).appendChild(editButton);
 
     console.log(geojson.features[featureIndex]);
-    let fs = formats.types();
+    let fs = formatDescriptions.map(f => f.formname);
     fs.unshift("Non definito");
     let typeIndex = 0;
 

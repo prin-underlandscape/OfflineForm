@@ -2,7 +2,9 @@ function editFeature (featureIndex) {
   typeName = geojson.features[featureIndex].properties.ulsp_type;
   console.log(`${featureIndex} + ${typeName}`);
   console.log(geojson);
-	let properties = formats.format(geojson.features[featureIndex].properties.ulsp_type);
+  let properties = formatDescriptions.find(frm => frm.formname === typeName);
+//  let properties = formats.format(geojson.features[featureIndex].properties.ulsp_type);
+console.log(properties);
   let propertiesList=document.getElementById("PropertiesList");
   let wrongAttributes=document.getElementById("WrongAttributes");
 
@@ -41,7 +43,7 @@ function editFeature (featureIndex) {
   
   function editStringcombo(present,value,index,array) {
     let legal=false;
-  let propertyValue = document.createElement("SELECT");
+    let propertyValue = document.createElement("SELECT");
     value.values.items.forEach( (f,i) => { 
       o = document.createElement("option");
       o.text = f.item;
@@ -69,71 +71,70 @@ function editFeature (featureIndex) {
   }
   
 // geojson.features[event.target.id].properties		
-		console.log(featureIndex);
+  console.log(featureIndex);
 // Abilita il pannello di editing delle proprietà
-    $("#FeatureEditor").show();
+  $("#FeatureEditor").show();
     
 // Genera l'elenco degli attributi da rimuovere, non contenuti nel database Underlandscape    
-    let ulspAttributes = properties.forms[0].formitems.map(i => i.key);
-    console.log(geojson.features[featureIndex].properties);
-    Object.keys(geojson.features[featureIndex].properties).forEach( (inputAttr, index) =>
-    {
-      if ( ! ulspAttributes.find( ulspAttr => inputAttr === ulspAttr) )  {
-        let keyvalue = document.createElement("LABEL");
-        keyvalue.style.color = "red";
-        keyvalue.style.fontSize = "x-small ";
-        val = JSON.stringify(geojson.features[featureIndex].properties[inputAttr]);
-        keyvalue.innerHTML = `\t${inputAttr}: ${val}`;
-        let removeButton = document.createElement("BUTTON");
-        removeButton.innerHTML = "Rimuovi";
-        removeButton.id = inputAttr;
-        removeButton.addEventListener("click", (event) => {
-          console.log(geojson.features[featureIndex].properties[event.target.id]);
-          delete geojson.features[featureIndex].properties[event.target.id];
-          console.log(document.getElementById(inputAttr));
-          document.getElementById(inputAttr).parentNode.style.visibility = "Hidden";
-          document.getElementById(inputAttr).parentNode.style.display = "none";
-        })
-        let wrongAttribute = document.createElement("DIV");
-        let parent = wrongAttributes.appendChild(wrongAttribute);
-        parent.appendChild(removeButton);
-        parent.appendChild(keyvalue);
-        parent.appendChild(document.createElement("br"));
-      }
+  let ulspAttributes = properties.formitems.map(i => i.key);
+  console.log(geojson.features[featureIndex].properties);
+  Object.keys(geojson.features[featureIndex].properties).forEach( (inputAttr, index) =>
+  {
+    if ( ! ulspAttributes.find( ulspAttr => inputAttr === ulspAttr) )  {
+      let keyvalue = document.createElement("LABEL");
+      keyvalue.style.color = "red";
+      keyvalue.style.fontSize = "x-small ";
+      val = JSON.stringify(geojson.features[featureIndex].properties[inputAttr]);
+      keyvalue.innerHTML = `\t${inputAttr}: ${val}`;
+      let removeButton = document.createElement("BUTTON");
+      removeButton.innerHTML = "Rimuovi";
+      removeButton.id = inputAttr;
+      removeButton.addEventListener("click", (event) => {
+        console.log(geojson.features[featureIndex].properties[event.target.id]);
+        delete geojson.features[featureIndex].properties[event.target.id];
+        console.log(document.getElementById(inputAttr));
+        document.getElementById(inputAttr).parentNode.style.visibility = "Hidden";
+        document.getElementById(inputAttr).parentNode.style.display = "none";
+      })
+      let wrongAttribute = document.createElement("DIV");
+      let parent = wrongAttributes.appendChild(wrongAttribute);
+      parent.appendChild(removeButton);
+      parent.appendChild(keyvalue);
+      parent.appendChild(document.createElement("br"));
     }
-    );
+  });
 // Genera l'elenco editabile dei campi editabili, evidenziando errori
-		properties.forms[0].formitems.forEach( (value,index,array) =>
-    {
-      if ( value.key !== "ulsp_type" ) {
-        let nome = document.createTextNode(`${value.key}: `);
-        let present = geojson.features[featureIndex].properties[value.key];
-        PropertiesList.appendChild(nome);
-        if ( present === undefined ) {
-            present = ""
-        }
-        switch (value.type) {
-          case "string": 
-          case "date": 
-          case "time": 
-          case "pictures":
-            editString(present,value,index,array);
-            break;
-          case "stringcombo": 
-            editStringcombo(present,value,index,array);
-            break;
-          case "double": 
-          case "integer": 
-            editDouble(present,value,index,array);
-            break;
-          default:
-            editString("nil",value,index,array);
-            break;
-        }
-			PropertiesList.appendChild(document.createElement("br"));
-    }
-    });
-		$("#FeatureList").hide();
+  properties.formitems.forEach( (value,index,array) =>
+  {
+    if ( value.key !== "ulsp_type" ) {
+      let nome = document.createTextNode(`${value.key}: `);
+      let present = geojson.features[featureIndex].properties[value.key];
+      PropertiesList.appendChild(nome);
+      if ( present === undefined ) {
+          present = ""
+      }
+      switch (value.type) {
+        case "string": 
+        case "date": 
+        case "time": 
+        case "pictures":
+          editString(present,value,index,array);
+          break;
+        case "stringcombo": 
+          editStringcombo(present,value,index,array);
+          break;
+        case "double": 
+        case "integer": 
+          editDouble(present,value,index,array);
+          break;
+        default:
+          editString("nil",value,index,array);
+          break;
+      }
+    PropertiesList.appendChild(document.createElement("br"));
+  }
+  });
+  $("#FeatureList").hide();
 //		document.getElementById("upload").style.display="block";
 }
 
