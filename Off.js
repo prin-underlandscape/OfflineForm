@@ -1,22 +1,45 @@
 var geojson = {};
+var umap = {};
+var inputType = ""; // geojson or umap
 
 // La funzione risponde alla scelta del file in apertura della App
 // e, a caricamento avvenuto, chiama la funzione processFile
 function handleSubmit (event) {
 	//event.preventDefault(); // Evita che venga ricaricato il form
 	if (!file.value.length) return; // Annulla se file vuoto (prudente)
-	let reader = new FileReader();
-	reader.onload = processFile;
+  inputType = file.value.split('.').pop()
+	var reader = new FileReader();
+	reader.onload = (event) => {
+    switch (inputType) {
+      case "geojson":
+        geojson = JSON.parse(event.target.result);
+        processFile();
+        break;
+      case "umap":
+        geojson = JSON.parse(event.target.result).layers[0];
+        // Remove _umap_options attribute (will be restored)
+//        if(geojson.hasKey("_umap_options")) {
+          delete geojson["_umap_options"];
+//        }
+        processFile(); 
+        break;
+      default: return;
+    }
+  }
 	reader.readAsText(document.getElementById("file").files[0]);
+  console.log(inputType);
 }
 
-// La funzione risponde alla scelta del file in apertura della App.
-// Dell'evento viene utilizzato il nome del file (result)
+// La funzione è invocata al termine del caricamento del file, nel caso
+// in cui si stia elaborabdo un file geojson.
+// Dell'evento viene utilizzato il contenuto del file (result),
+// caricato nella variabile globale "geojson".
 // Viene visualizzata una tabella per ciascuna delle feature
-// contenuta nel file, che può essere di vari tipi (ora Sito, Percorso,
-// e Foto). Poi un menu a tendina per indicare/modificare il tipo, ed
-// un bottone per la modifica della feature guidata dal formato
-function processFile (event) {
+// contenuta nela variabile "geojson, che può essere di vari tipi
+// (ora Sito, Percorso, e Foto). Poi un menu a tendina per
+// indicare/modificare il tipo, ed un bottone per la modifica della
+// feature guidata dal formato
+function processFile () {
   function featureName(fp) {
     if ( fp.ulsp_type ) {
       switch (fp.ulsp_type) {
@@ -34,12 +57,12 @@ function processFile (event) {
       return `${fp.Titolo}`;
     };
   } // end function
+  console.log(JSON.stringify(geojson));
 // Disabilita il pannello di upload
 	document.getElementById("upload").style.display="none";
 // Abilita il pannello di scelta della feature
 	document.getElementById("FeatureList").style.display="block";
-
-	geojson = JSON.parse(event.target.result);
+  
 	let featuresTable=document.getElementById("FeaturesTable");
   
   geojson.features.forEach( (feature, featureIndex) => {
