@@ -209,39 +209,43 @@ function saveGeoJSON() {
 
 // Prepara un file umap con le features contenute nella variabile
 // geojson.
-// Il procedimento non è valido perchè il template si riferisce ad una
-// mappa (vedi campo "uri") e quindi si continua a produrre la stessa
-// mappa. Sarebbe meglio utilizzare un umap caricato all'inizio della
-// sessione ed impostare solo i campi definiti nel template
+// Utilizza il template contenuto nella variabile "umap". Il file
+// è prodotto a partire da un umap scaricato dalla mappa
+// underlandscape-template_93188, eliminando tutte le features nei
+// livelli, gli id dei livelli, e la uri
 // La tecnica per il salvataggio del file è analoga a quella di
 // savegeojson
 function saveUmap() {
-  let allowedTypes = umap.layers.map( l => l._umap_options.name );
+  var newUmap = umapTemplate;
+  let allowedTypes = newUmap.layers.map( l => l._umap_options.name );
   console.log(allowedTypes);
 //  percorsi.features.push(lxpercorso);
 //  foto.features.push(lxfoto);
 //  siti.features.push(lxsito);
-
+  
   geojson.features.map( feature => {
     console.log(feature.properties.ulsp_type);
     if ( allowedTypes.includes(feature.properties.ulsp_type) ) {
+	  let layer = newUmap.layers.find(l => l._umap_options.name === feature.properties.ulsp_type);
       feature.properties._umap_options = {};
       feature.properties._umap_options.popupTemplate = "Default";
-      let layer = umap.layers.find(l => l._umap_options.name === feature.properties.ulsp_type);
-      layer.features.push(feature);
+	  layer.features.push(feature);
+//      let layer = umap.layers.find(l => l._umap_options.name === feature.properties.ulsp_type);
+//      layer.features.push(feature);
     }
   });
+  newUmap.geometry.coordinates = geojson.features[0].geometry.coordinates;
 
-  console.log(geojson);
+  console.log(newUmap);
 
-	const a = document.createElement("a");
-	a.href = URL.createObjectURL(new Blob([JSON.stringify(umap, null, 2)], {
-	type: "text/plain"
-	}));
-	a.setAttribute("download", "map.umap");
-	document.body.appendChild(a);
-	a.click();
-	document.body.removeChild(a);
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(newUmap, null, 2)], {
+    type: "text/plain"
+  }));
+  a.setAttribute("download", "map.umap");
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 
 
 	//$("#FeatureList").hide();
