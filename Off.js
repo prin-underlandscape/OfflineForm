@@ -19,9 +19,57 @@ function handleSubmit (event) {
         geojson = JSON.parse(event.target.result).layers[0];
         // Remove _umap_options attribute (will be restored)
 //        if ("_umap_options" in geojson ) {
-          delete geojson["_umap_options"];
+//          delete geojson["_umap_options"];
 //        }
         processFile(); 
+        break;
+      case "qrcode":
+        point = JSON.parse(event.target.result);
+        geojson = {
+	      "type": "FeatureCollection",
+	      "features": []
+	    };
+	    geojson.features.push(point);
+        geojson.features[0].properties.ulsp_type = "Sito";
+        map=[
+    	  ["01-name","Titolo"],
+          ["02-description","Descrizione"],
+          ["03-date","Data"],
+          ["04-time","Ora"],
+          ["07-Sito","Sito"],
+          ["08-Provincia","Provincia"],
+          ["09-Comune","Comune"],
+          ["10-Toponimo","Toponimo"],
+	      ["11-Microtoponimo","Microtoponimo"],
+	      ["12-Altitudine","Altitudine"],
+          ["13-Strada accesso","Strade d'accesso"],
+          ["14-Altra localizzazione","Altri elementi di localizzazione"],
+          ["15-Tipologia","Tipologia sito"],
+          ["16-Definizione","Definizione"],
+          ["17-Cronologia iniziale","Cronologia Iniziale"],
+          ["18-Cronologia finale","Cronologia Finale"],
+          ["19-Reperti ceramici","Reperti ceramici"],
+          ["20-Reperti geologici","Reperti geologici"],
+          ["21-Reperti biologici","Reperti organici"],
+          ["22-Altri manufatti","Altri manufatti"],
+          ["23-Sicurezza","Sicurezza"],
+          ["24-Accessibilità","Accessibilità"],
+          ["25-Copertura rete mobile","Copertura rete mobile"],
+          ["26-Copertura GPS","Copertura GPS"],
+          ["_umap_options",""]
+        ]
+        function mapField(orig,target) {
+          if ( orig in geojson.features[0].properties ) {
+  	        if (target !== "" ) {
+             geojson.features[0].properties[target] = geojson.features[0].properties[orig];
+	        }
+  	        delete(geojson.features[0].properties[orig]);
+          }
+          if ( geojson.features[0].properties[target] === false ) geojson.features[0].properties[target] = "NO";
+          if ( geojson.features[0].properties[target] === true ) geojson.features[0].properties[target] = "SI";
+        }
+        map.forEach( m => mapField( m[0], m[1] ) );
+        processFile();
         break;
       default: return;
     }
