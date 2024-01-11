@@ -18,7 +18,7 @@ function handleSubmit (event) {
       case "umap":
         geojson = JSON.parse(event.target.result).layers[0];
         // Remove _umap_options attribute (will be restored)
-//        if(geojson.hasKey("_umap_options")) {
+//        if ("_umap_options" in geojson ) {
           delete geojson["_umap_options"];
 //        }
         processFile(); 
@@ -26,8 +26,77 @@ function handleSubmit (event) {
       default: return;
     }
   }
-	reader.readAsText(document.getElementById("file").files[0]);
+  reader.readAsText(document.getElementById("file").files[0]);
   console.log(inputType);
+}
+
+
+function QRscan() {
+
+// Disabilita il pannello di upload
+  document.getElementById("upload").style.display="none";
+// Abilita il pannello di scelta della feature
+  document.getElementById("scanInterface").style.display="block";
+  console.log("Ecco...");
+  function onScanSuccess(decodeText, decodeResult) {
+    console.log(decodeText)
+    console.log(decodeResult);
+    geojson = {
+	  "type": "FeatureCollection",
+	  "features": []
+	};
+//	oldQRdata = JSON.parse(decodeText);
+    geojson.features.push(JSON.parse(decodeText));
+    geojson.features[0].properties.ulsp_type = "Sito";
+// Begin compatibility mode
+    map=[
+     ["name","Sito"],
+     ["microtoponimo","Microtoponimo"],
+     ["altitudine","Altitudine"],
+     ["altra localizzazione","Altri elementi di localizzazione"],
+     ["altri manufatti","Altri manufatti"],
+     ["comune","Comune"],
+     ["copertura GPS","Copertura GPS"],
+     ["copertura rete mobile","Copertura rete mobile"],
+     ["cronologia iniziale","Cronologia Iniziale"],
+     ["cronologia finale","Cronologia Finale"],
+     ["date","Data"],
+     ["description","Descrizione"],
+     ["provincia","Provincia"],
+     ["reperti biologici","Reperti organici"],
+     ["reperti geologici","Reperti geologici"],
+     ["reperti ceramici","Reperti ceramici"],
+     ["sicurezza","Sicurezza"],
+     ["strada accesso","Strade d'accesso"],
+     ["time","Ora"],
+     ["tipologia","Tipologia sito"],
+     ["toponimo","Toponimo"],
+     ["sito",""],
+     ["_umap_options",""]
+   ]
+    function mapField(orig,target) {
+      if ( orig in geojson.features[0].properties ) {
+  	    if (target !== "" ) {
+			geojson.features[0].properties[target] = geojson.features[0].properties[orig];
+	    }
+  	    delete(geojson.features[0].properties[orig]);
+      }
+      if ( geojson.features[0].properties[target] === false ) geojson.features[0].properties[target] = "NO";
+      if ( geojson.features[0].properties[target] === true ) geojson.features[0].properties[target] = "SI";
+    }
+    map.forEach( m => mapField( m[0], m[1] ) );
+// End compatibility mode	
+    processFile();
+// Disabilita il pannello di upload
+    document.getElementById("scanInterface").style.display="none";
+// Abilita il pannello di scelta della feature
+    document.getElementById("FeatureList").style.display="block";
+  }
+  let htmlscanner = new Html5QrcodeScanner(
+    "my-qr-reader",
+    { fps: 10, qrbos: 250 }
+  );
+  htmlscanner.render(onScanSuccess);
 }
 
 // La funzione è invocata al termine del caricamento del file, nel caso

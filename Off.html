@@ -11,8 +11,17 @@
     <form id="upload">
       <label for="file">Seleziona il file da caricare</label>
       <br>
-      <input type="file" id="file" accept=".geojson,.umap" onchange=handleSubmit()>
+      <input type="file" id="file" accept=".geojson,.umap,.jpeg" onchange=handleSubmit()>
+      <br> oppure
+      <br> <button type="button" onclick=QRscan()>Scansiona un QR code</button> (prodotto con la app Android)
     </form>
+    <div class="container" id="scanInterface" hidden>
+        <h1>Scansione del QR code</h1>
+        <div class="section">
+            <div id="my-qr-reader">
+            </div>
+        </div>
+    </div>
     <div id="FeatureList" hidden >
       Scegli la feature da modificare: <br>
       <table id="FeaturesTable"></table>
@@ -30,8 +39,9 @@
     </div>
     
 <!--
-    <script src="jquery-3.7.0.js"></script>
+    https://www.npmjs.com/package/html5-qrcode
 -->
+    <script src="html5-qrcode.js"> </script>
     <script src="umapTemplate.js"></script>
     <script src="formats.js"></script>
     <script src="Off.js"></script>
