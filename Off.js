@@ -46,8 +46,8 @@ function handleSubmit (event) {
           ["14-Altra localizzazione","Altri elementi di localizzazione"],
           ["15-Tipologia","Tipologia sito"],
           ["16-Definizione","Definizione"],
-          ["17-Cronologia iniziale","Cronologia Iniziale"],
-          ["18-Cronologia finale","Cronologia Finale"],
+          ["17-Cronologia iniziale","Cronologia iniziale"],
+          ["18-Cronologia finale","Cronologia finale"],
           ["19-Reperti ceramici","Reperti ceramici"],
           ["20-Reperti geologici","Reperti geologici"],
           ["21-Reperti biologici","Reperti organici"],
@@ -283,6 +283,7 @@ function saveUmap() {
     }
   });
   newUmap.geometry.coordinates = geojson.features[0].geometry.coordinates;
+  newUmap.properties.name = "Sito " + geojson.features[0].properties.Sito;
 
   console.log(newUmap);
 

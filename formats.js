@@ -157,7 +157,7 @@ const formatDescriptions =
         "type": "string"
       },
       {
-        "key": "Cronologia Iniziale",
+        "key": "Cronologia iniziale",
         "values": {
           "items": [
             {
@@ -235,7 +235,7 @@ const formatDescriptions =
         "type": "stringcombo"
       },
       {
-        "key": "Cronologia Finale",
+        "key": "Cronologia finale",
         "values": {
           "items": [
             {
@@ -447,8 +447,13 @@ const formatDescriptions =
         "key": "Foto",
         "label": "Foto",
         "value": "",
-        "type": "pictures"
+        "type": "string"
       },
+      { "key": "Link",
+		"label": "Link",
+		"value": "",
+		"type": "string"
+	  },
       {
         "key": "Bibliografia",
         "value": "",
