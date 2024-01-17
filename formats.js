@@ -461,6 +461,11 @@ const formatDescriptions =
         "type": "string"
       },
       {
+        "key": "Strumento",
+        "value": "",
+        "type": "string"
+      },
+      {
         "key": "Data",
         "value": "",
         "type": "date"

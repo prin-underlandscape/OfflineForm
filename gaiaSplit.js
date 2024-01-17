@@ -1,3 +1,19 @@
+function handleSubmit (event) {
+	//event.preventDefault(); // Evita che venga ricaricato il form
+	if (!file.value.length) return; // Annulla se file vuoto (prudente)
+	let reader = new FileReader();
+	reader.onload = processFile;
+	reader.readAsText(document.getElementById("file").files[0]);
+}
+
+function closeFile() {
+	document.getElementById("FeatureList").style.display="none";
+	document.getElementById("FeaturesTable").replaceChildren();
+	document.getElementById("upload").style.display="block";
+	document.getElementById("file").value = "";
+	geojson = {};
+}
+
 function savePath() {
 	const a = document.createElement("a");
 	a.href = URL.createObjectURL(new Blob([JSON.stringify(output, null, 2)], {
@@ -11,10 +27,12 @@ function savePath() {
   
 function processFile (event) {
 // Disabilita il pannello di upload
-	$("#upload").hide();
+	document.getElementById("upload").style.display="none";
+//	$("#upload").hide();
 // Abilita il pannello di scelta della feature
-	$("#FeatureList").show();
-  let featuresTable=document.getElementById("FeaturesTable");
+	document.getElementById("FeatureList").style.display="block";
+//	$("#FeatureList").show();
+    let featuresTable=document.getElementById("FeaturesTable");
 
 	geojson = JSON.parse(event.target.result);
   console.log(geojson);

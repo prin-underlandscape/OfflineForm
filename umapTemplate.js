@@ -13,7 +13,7 @@ const umapTemplate = {
     },
     "properties": {
         "name": "underlandscape-template",
-        "zoom": 13,
+        "zoom": 15,
         "easing": false,
         "licence": "",
         "miniMap": false,
@@ -146,6 +146,7 @@ da {Autore}`
 **Altra localizzazione**: {Altri elementi di localizzazione}
 ---
 **Prima visita**: {Data} {Ora}
+**Strumento**: {Strumento}
 [[https://sites.google.com/view/prin-underlandscape/home-page/bibliografie/{Sito}|bibliografia]]`
             }
         }
