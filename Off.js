@@ -147,6 +147,26 @@ function QRscan() {
   htmlscanner.render(onScanSuccess);
 }
 
+// Funzione di utilità: data una lista di properties costruisce l'etichetta
+// per la lista delle features 
+function featureName(fp) {
+  if ( fp.ulsp_type ) {
+    switch (fp.ulsp_type) {
+      case "Sito":
+        return `Sito ${fp.Titolo} (${fp.Sito})`;
+        break;
+      case "Percorso":
+        return `${fp.Titolo}`;
+        break;
+      case "POI":
+        return `${fp.Titolo}`;
+        break;
+    }
+  } else {
+    return `${fp.Titolo}`;
+  };
+}
+// end function
 // La funzione è invocata al termine del caricamento del file, nel caso
 // in cui si stia elaborabdo un file geojson.
 // Dell'evento viene utilizzato il contenuto del file (result),
@@ -157,23 +177,6 @@ function QRscan() {
 // indicare/modificare il tipo, ed un bottone per la modifica della
 // feature guidata dal formato
 function processFile () {
-  function featureName(fp) {
-    if ( fp.ulsp_type ) {
-      switch (fp.ulsp_type) {
-        case "Sito":
-          return `Sito ${fp.Sito}: ${fp.Microtoponimo}`;
-          break;
-        case "Percorso":
-          return `${fp.Titolo}`;
-          break;
-        case "POI":
-          return `${fp.Titolo}`;
-          break;
-      }
-    } else {
-      return `${fp.Titolo}`;
-    };
-  } // end function
   console.log(JSON.stringify(geojson));
 // Disabilita il pannello di upload
   document.getElementById("upload").style.display="none";
@@ -350,6 +353,9 @@ function editFeature (featureIndex) {
     propertyValue.addEventListener("change", (propertyEvent) => {
       let fieldName = propertyEvent.target.id;
       geojson.features[featureIndex].properties[fieldName] = propertyEvent.target.value;
+// Ricostruisce l'intestazione della riga nell'elenco delle features
+      document.getElementById("FeaturesTable").childNodes[featureIndex].getElementsByTagName('label')[0].innerHTML =
+	    featureName(geojson.features[featureIndex].properties);    
       document.activeElement.blur();
     });
     if ( present === "" ) propertyValue.style.backgroundColor = "yellow";
@@ -367,6 +373,9 @@ function editFeature (featureIndex) {
     propertyValue.addEventListener("change", (propertyEvent) => {
       let fieldName = propertyEvent.target.id;
       geojson.features[featureIndex].properties[fieldName] = propertyEvent.target.value;
+// Ricostruisce l'intestazione della riga nell'elenco delle features
+      document.getElementById("FeaturesTable").childNodes[featureIndex].getElementsByTagName('label')[0].innerHTML =
+	    featureName(geojson.features[featureIndex].properties);    
       document.activeElement.blur();
     });
     if ( present === "" ) propertyValue.style.backgroundColor = "yellow";
@@ -468,6 +477,13 @@ function editFeature (featureIndex) {
   }
   });
   document.getElementById("FeatureList").style.display = "none";
+//  document.getElementById("FeaturesTable").childNodes[featureIndex].getElementsByTagName('label')[0].innerHTML =
+//	featureName(geojson.features[featureIndex].properties);
+//  console.log(geojson.features[featureIndex].properties);
+//  console.log(document.getElementById("FeaturesTable").childNodes[featureIndex].getElementsByTagName('label'));
+// svuota la tabella delle features (per ricostruirla)
+//  document.getElementById("FeaturesTable").replaceChildren();
+//  processFile();
 //		document.getElementById("upload").style.display="block";
 }
 
