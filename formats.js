@@ -472,7 +472,7 @@ const formatDescriptions =
     ]
   },
   {
-    "formname": "Foto",
+    "formname": "POI",
     "formitems": [
         {
           "key": "ulsp_type",
@@ -485,12 +485,7 @@ const formatDescriptions =
           "type": "string"
         },
         {
-          "key": "Tag Google",
-          "value": "",
-          "type": "string"
-        },
-        {
-          "key": "URL",
+          "key": "Foto",
           "value": "",
           "type": "string"
         },

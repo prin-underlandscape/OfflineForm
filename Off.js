@@ -166,7 +166,7 @@ function processFile () {
         case "Percorso":
           return `${fp.Titolo}`;
           break;
-        case "Foto":
+        case "POI":
           return `${fp.Titolo}`;
           break;
       }
@@ -278,12 +278,24 @@ function saveUmap() {
       feature.properties._umap_options = {};
       feature.properties._umap_options.popupTemplate = "Default";
 	  layer.features.push(feature);
+	  if ( feature.properties.ulsp_type === "Sito" || feature.properties.ulsp_type === "POI" ) {
+	    newUmap.geometry.coordinates = feature.geometry.coordinates;
+      }
+      if ( feature.properties.ulsp_type === "Sito" ) {
+	    newUmap.geometry.coordinates = feature.geometry.coordinates;
+	    newUmap.properties.name = "Sito " + feature.properties.Sito;
+      }
 //      let layer = umap.layers.find(l => l._umap_options.name === feature.properties.ulsp_type);
 //      layer.features.push(feature);
     }
   });
-  newUmap.geometry.coordinates = geojson.features[0].geometry.coordinates;
-  newUmap.properties.name = "Sito " + geojson.features[0].properties.Sito;
+//  let center = newUmap.layers.find(l => l._umap_options.name === "POI" || l._umap_options.name === "SITO" ).features[1].geometry.coordinates;
+//  console.log(center);
+//  newUmap.geometry.coordinates = coordinates;
+//  let siteName = newUmap.layers.find(l => l._umap_options.name === "SITO" ).features[1].properties.Sito;
+//  newUmap.properties.name = "Sito " + siteName;
+//  console.log(sito)
+//  if ( sito !== undefined ) {
 
   console.log(newUmap);
 

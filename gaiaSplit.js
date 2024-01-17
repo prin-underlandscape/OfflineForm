@@ -34,9 +34,10 @@ function processFile (event) {
           geometry: feature.geometry,
           properties: { }
         }
-        foto.properties.ulsp_type = "Foto";
-        foto.properties.URL = feature.properties.photos[0].fullsize_url;
+        foto.properties.ulsp_type = "POI";
+        foto.properties.Foto = feature.properties.photos[0].fullsize_url; // Problema CORS da uMap
         foto.properties.Titolo = feature.properties.photos[0].title;
+        foto.properties.Descrizione = feature.properties.photos[0].notes;
         foto.properties.Data = feature.properties.photos[0].time_created.split("T")[0];
         foto.properties.Ora = feature.properties.photos[0].time_created.split("T")[1];
         foto.properties.Strumento = source;
@@ -67,10 +68,12 @@ function processFile (event) {
       path.properties.Data = feature.properties.time_created.split("T")[0];
       path.properties.Ora = feature.properties.time_created.split("T")[1];
       path.properties.Strumento = feature.properties.source;
-      path.properties.Lunghezza = feature.properties.distance;
-      path.properties.Durata = feature.properties.moving_time;
-      path.properties["Dislivello in salita"] = feature.properties.total_ascent;
-      path.properties["Dislivello in discesa"] = feature.properties.total_descent;
+      path.properties.Lunghezza = (feature.properties.distance/1000).toFixed(3);
+      var date = new Date(feature.properties.moving_time * 1000);
+      var hm = date.toTimeString().split(':').slice(0,2);
+      path.properties.Durata = hm[0]+"h"+" "+hm[1]+"m";
+      path.properties["Dislivello in salita"] = feature.properties.total_ascent.toFixed(0);
+      path.properties["Dislivello in discesa"] = feature.properties.total_descent.toFixed(0);
       source = feature.properties.source;
       output.features.push(path);
       

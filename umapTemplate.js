@@ -53,21 +53,37 @@ const umapTemplate = {
             "type": "FeatureCollection",
             "features": [ ],
             "_umap_options": {
+                "name": "Percorso",
                 "displayOnLoad": true,
                 "browsable": true,
                 "remoteData": {
 
                 },
-                "name": "percorso"
+                "color": "Brown",
+                "popupShape": "Panel",
+                "popupTemplate": "Table",
+                "popupContentTemplate": `
+# {Titolo} 
+##   ( [[https://sites.google.com/view/prin-underlandscape/home-page/attivit%C3%A0-sul-campo/{Link}|link]]) 
+{Descrizione}
+--- 
+**Lunghezza** (km): {Lunghezza}
+**Durata**: {Durata}
+**Dislivello in salita** (m): {Dislivello in salita}
+**Dislivello in discesa** (m): {Dislivello in discesa} 
+--- 
+Registrato il {Data} alle {Ora} 
+con {Strumento} 
+da {Autore}`
             }
         },
         {
             "type": "FeatureCollection",
             "features": [ ],
             "_umap_options": {
+                "name": "POI",
                 "displayOnLoad": true,
                 "browsable": true,
-                "name": "POI",
                 "remoteData": {
 
                 },
@@ -75,13 +91,22 @@ const umapTemplate = {
                 "iconClass": "Ball",
                 "popupShape": "Panel",
                 "popupTemplate": "Table",
-                "popupContentTemplate": "# {name}\n{{https://drive.google.com/uc?id={Foto}|300}}\n##  ( [[https://sites.google.com/view/prin-underlandscape/home-page/attivit%C3%A0-sul-campo/{Link}|link]])\n{description}\n---\nScattata il {date_created}\nda {autore}\ncon {strumento}"
-            }
+                "popupContentTemplate": `
+# {Titolo} 
+{{{Foto}|300}} 
+##   ( [[https://sites.google.com/view/prin-underlandscape/home-page/attivit%C3%A0-sul-campo/{Link}|link]]) 
+{Descrizione} 
+--- 
+Scattata il {Data} alle {Ora} 
+con {Strumento} 
+da {Autore}`
+           }
         },
         {
             "type": "FeatureCollection",
             "features": [ ],
             "_umap_options": {
+                "name": "Sito",
                 "displayOnLoad": true,
                 "browsable": true,
                 "remoteData": {
@@ -89,8 +114,36 @@ const umapTemplate = {
                 },
                 "popupShape": "Panel",
                 "popupTemplate": "Table",
-                "popupContentTemplate": "# SITO {Sito}\n{{{Foto}|300}}\n## {name} ( [[https://sites.google.com/view/prin-underlandscape/{Link}|link]])\n{Descrizione}\n---\n**Tipologia**: {Tipologia sito}\n**Definizione**: {Definizione}\n**Cronologia iniziale**: {Cronologia iniziale}\n**Cronologia finale**: {Cronologia finale}\n**Reperti ceramici**: {Reperti ceramici}\n**Reperti geologici**: {Reperti geologici}\n**Reperti organici**: {Reperti organici}\n**Altri manufatti**: {Altri manufatti}\n---\n**Altitudine**: {Altitudine}\n**Sicurezza**: {Sicurezza}\n**Accessibilità**: {Accessibilità}\n**Copertura rete mobile**: {Copertura rete mobile}\n**Copertura GPS**: {Copertura GPS}\n---\n**Provincia**: {Provincia}\n**Comune**: {Comune}\n**Toponimo**: {Toponimo}\n**Microtoponimo**: {Microtoponimo}\n**Strade d'accesso**: {Strade d'accesso}\n**Altra localizzazione**: {Altri elementi di localizzazione}\n---\n**Prima visita**: {Data} {Ora}\n[[https://sites.google.com/view/prin-underlandscape/home-page/bibliografie/{Sito}|bibliografia]]",
-                "name": "Sito"
+                "popupContentTemplate": `
+# SITO {Sito}
+{{{Foto}|300}}
+## {name} ( [[https://sites.google.com/view/prin-underlandscape/{Link}|link]])
+{Descrizione}
+---
+**Tipologia**: {Tipologia sito}
+**Definizione**: {Definizione}
+**Cronologia iniziale**: {Cronologia iniziale}
+**Cronologia finale**: {Cronologia finale}
+**Reperti ceramici**: {Reperti ceramici}
+**Reperti geologici**: {Reperti geologici}
+**Reperti organici**: {Reperti organici}
+**Altri manufatti**: {Altri manufatti}
+---
+**Altitudine** (m): {Altitudine}
+**Sicurezza**: {Sicurezza}
+**Accessibilità**: {Accessibilità}
+**Copertura rete mobile**: {Copertura rete mobile}
+**Copertura GPS**: {Copertura GPS}
+---
+**Provincia**: {Provincia}
+**Comune**: {Comune}
+**Toponimo**: {Toponimo}
+**Microtoponimo**: {Microtoponimo}
+**Strade d'accesso**: {Strade d'accesso}
+**Altra localizzazione**: {Altri elementi di localizzazione}
+---
+**Prima visita**: {Data} {Ora}
+[[https://sites.google.com/view/prin-underlandscape/home-page/bibliografie/{Sito}|bibliografia]]`
             }
         }
     ]
