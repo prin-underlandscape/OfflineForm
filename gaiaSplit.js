@@ -38,6 +38,7 @@ function processFile (event) {
         foto.properties.Foto = feature.properties.photos[0].fullsize_url; // Problema CORS da uMap
         foto.properties.Titolo = feature.properties.photos[0].title;
         foto.properties.Descrizione = feature.properties.photos[0].notes;
+        foto.properties["Altitudine"] = feature.properties.elevation;
         foto.properties.Data = feature.properties.photos[0].time_created.split("T")[0];
         foto.properties.Ora = feature.properties.photos[0].time_created.split("T")[1];
         foto.properties.Strumento = source;

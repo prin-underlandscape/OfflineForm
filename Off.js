@@ -152,7 +152,7 @@ function QRscan() {
 // Dell'evento viene utilizzato il contenuto del file (result),
 // caricato nella variabile globale "geojson".
 // Viene visualizzata una tabella per ciascuna delle feature
-// contenuta nela variabile "geojson, che può essere di vari tipi
+// contenuta nella variabile "geojson, che può essere di vari tipi
 // (ora Sito, Percorso, e Foto). Poi un menu a tendina per
 // indicare/modificare il tipo, ed un bottone per la modifica della
 // feature guidata dal formato
@@ -176,11 +176,11 @@ function processFile () {
   } // end function
   console.log(JSON.stringify(geojson));
 // Disabilita il pannello di upload
-	document.getElementById("upload").style.display="none";
+  document.getElementById("upload").style.display="none";
 // Abilita il pannello di scelta della feature
-	document.getElementById("FeatureList").style.display="block";
+  document.getElementById("FeatureList").style.display="block";
   
-	let featuresTable=document.getElementById("FeaturesTable");
+  let featuresTable=document.getElementById("FeaturesTable");
   
   geojson.features.forEach( (feature, featureIndex) => {
     let featureTools = document.createElement("DIV"); 
@@ -336,8 +336,7 @@ function editFeature (featureIndex) {
   console.log(`${featureIndex} + ${typeName}`);
   console.log(geojson);
   let properties = formatDescriptions.find(frm => frm.formname === typeName);
-//  let properties = formats.format(geojson.features[featureIndex].properties.ulsp_type);
-console.log(properties);
+  console.log(properties);
   let propertiesList=document.getElementById("PropertiesList");
   let wrongAttributes=document.getElementById("WrongAttributes");
 
@@ -403,16 +402,16 @@ console.log(properties);
     }
   }
   
-// geojson.features[event.target.id].properties		
-  console.log(featureIndex);
+//  geojson.features[event.target.id].properties		
+//  console.log(featureIndex);
 // Abilita il pannello di editing delle proprietà
   document.getElementById("FeatureEditor").style.display = "block";
     
-// Genera l'elenco degli attributi da rimuovere, non contenuti nel database Underlandscape    
   let ulspAttributes = properties.formitems.map(i => i.key);
   console.log(geojson.features[featureIndex].properties);
   Object.keys(geojson.features[featureIndex].properties).forEach( (inputAttr, index) =>
   {
+// Genera l'elenco degli attributi da rimuovere, non contenuti nel database Underlandscape    
     if ( ! ulspAttributes.find( ulspAttr => inputAttr === ulspAttr) )  {
       let keyvalue = document.createElement("LABEL");
       keyvalue.style.color = "red";
@@ -459,6 +458,7 @@ console.log(properties);
         case "double": 
         case "integer": 
           editDouble(present,value,index,array);
+          PropertiesList.appendChild(document.createTextNode(value.unit));
           break;
         default:
           editString("nil",value,index,array);

@@ -95,7 +95,8 @@ da {Autore}`
 # {Titolo} 
 {{{Foto}|300}} 
 ##   ( [[https://sites.google.com/view/prin-underlandscape/home-page/attivit%C3%A0-sul-campo/{Link}|link]]) 
-{Descrizione} 
+{Descrizione}
+**Altitudine** (m): {Altitudine}
 --- 
 Scattata il {Data} alle {Ora} 
 con {Strumento} 
@@ -112,6 +113,8 @@ da {Autore}`
                 "remoteData": {
 
                 },
+                "color": "DarkBlue",
+                "iconClass": "Ball",
                 "popupShape": "Panel",
                 "popupTemplate": "Table",
                 "popupContentTemplate": `

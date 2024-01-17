@@ -46,7 +46,8 @@ const formatDescriptions =
       {
         "key": "Altitudine",
         "value": "",
-        "type": "double"
+        "type": "double",
+        "unit": "m"
       },
       {
         "key": "Strade d'accesso",
@@ -495,6 +496,12 @@ const formatDescriptions =
           "type": "string"
         },
         {
+          "key": "Altitudine",
+          "value": "",
+          "type": "integer",
+          "unit": "m"
+        },
+        {
           "key": "Autore",
           "value": "",
           "type": "string"
@@ -579,22 +586,25 @@ const formatDescriptions =
           {
             "key": "Lunghezza",
             "value": "",
-            "type": "integer"
+            "type": "integer",
+            "unit": "km"
           },
           {
             "key": "Durata",
             "value": "",
-            "type": "integer"
+            "type": "string"
           },
           {
             "key": "Dislivello in salita",
             "value": "",
-            "type": "integer"
+            "type": "integer",
+            "unit": "m"
           },
           {
             "key": "Dislivello in discesa",
             "value": "",
-            "type": "integer"
+            "type": "integer",
+            "unit": "m"
           },
           {
             "key": "Segnaletica",
