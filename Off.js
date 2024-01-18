@@ -84,7 +84,7 @@ function featureName(fp) {
   if ( fp.ulsp_type ) {
     switch (fp.ulsp_type) {
       case "Sito":
-        return `Sito ${fp.Titolo} (${fp.Sito})`;
+        return `Sito ${fp.Sito} (${fp.Titolo})`;
         break;
       case "Percorso":
         return `${fp.Titolo}`;
@@ -97,7 +97,12 @@ function featureName(fp) {
     return `${fp.Titolo}`;
   };
 }
-// end function
+
+function redrawFeaturesTable() {
+  document.getElementById("FeaturesTable").replaceChildren();
+  processFile();
+}
+
 // La funzione è invocata al termine del caricamento del file, nel caso
 // in cui si stia elaborabdo un file geojson.
 // Dell'evento viene utilizzato il contenuto del file (result),
@@ -105,8 +110,8 @@ function featureName(fp) {
 // Viene visualizzata una tabella per ciascuna delle feature
 // contenuta nella variabile "geojson, che può essere di vari tipi
 // (ora Sito, Percorso, e Foto). Poi un menu a tendina per
-// indicare/modificare il tipo, ed un bottone per la modifica della
-// feature guidata dal formato
+// indicare/modificare il tipo, un bottone per la modifica della
+// feature guidata dal formato, ed uno per la rimozione della feature
 function processFile () {
   console.log(JSON.stringify(geojson));
 // Disabilita il pannello di upload
@@ -121,11 +126,13 @@ function processFile () {
     let name = document.createElement("LABEL");
     let selectType = document.createElement("SELECT");
     let editButton = document.createElement("BUTTON");
+    let deleteButton = document.createElement("BUTTON");
     
     let row = featuresTable.appendChild(document.createElement("thead"));
     row.appendChild(document.createElement("td")).appendChild(name);
     row.appendChild(document.createElement("td")).appendChild(selectType);
     row.appendChild(document.createElement("td")).appendChild(editButton);
+    row.appendChild(document.createElement("td")).appendChild(deleteButton);
 
     console.log(geojson.features[featureIndex]);
     let fs = formatDescriptions.map(f => f.formname);
@@ -139,7 +146,7 @@ function processFile () {
       typeIndex.selectedType = 0;
     };
     
-// Scelta del tipo del file 
+// Gestione della tendina di scelta del tipo del file 
     fs.forEach( (f,i) => { 
       o = document.createElement("option");
       o.text = f;
@@ -157,11 +164,11 @@ function processFile () {
       } else {
         editButton.disabled=true;
       }
-      name.innerHTML = featureName(geojson.features[featureIndex].properties);
+      redrawFeaturesTable(); // Aggiorna la visualizzazione
       document.activeElement.blur();
     });
 
-// Bottone di modifica
+// Gestione del bottone di modifica
     editButton.innerHTML = "Modifica";
     if (typeIndex === 0) {
       editButton.disabled=true;
@@ -170,6 +177,14 @@ function processFile () {
       console.log(geojson.features[featureIndex].properties.ulsp_type);
 //     editFeature(featureIndex, geojson.features[featureIndex].properties.ulsp_type);
       editFeature(featureIndex);
+    })
+  
+// Gestione del bottone di modifica
+    deleteButton.innerHTML = "Rimuovi";
+    deleteButton.addEventListener( "click", (event) => {
+      geojson.features.splice(featureIndex, 1);  // Rimuove la feature dal buffer (geojson)
+      redrawFeaturesTable(); // Aggiorna la visualizzazione
+      console.log(geojson.features);
     })
   })
 }
@@ -284,9 +299,6 @@ function editFeature (featureIndex) {
     propertyValue.addEventListener("change", (propertyEvent) => {
       let fieldName = propertyEvent.target.id;
       geojson.features[featureIndex].properties[fieldName] = propertyEvent.target.value;
-// Ricostruisce l'intestazione della riga nell'elenco delle features
-      document.getElementById("FeaturesTable").childNodes[featureIndex].getElementsByTagName('label')[0].innerHTML =
-	    featureName(geojson.features[featureIndex].properties);    
       document.activeElement.blur();
     });
     if ( present === "" ) propertyValue.style.backgroundColor = "yellow";
@@ -304,7 +316,7 @@ function editFeature (featureIndex) {
     propertyValue.addEventListener("change", (propertyEvent) => {
       let fieldName = propertyEvent.target.id;
       geojson.features[featureIndex].properties[fieldName] = propertyEvent.target.value;
-// Ricostruisce l'intestazione della riga nell'elenco delle features
+// Ricostruisce l'intestazione della riga nell'elenco delle features (utile solo per le stringhe)
       document.getElementById("FeaturesTable").childNodes[featureIndex].getElementsByTagName('label')[0].innerHTML =
 	    featureName(geojson.features[featureIndex].properties);    
       document.activeElement.blur();
