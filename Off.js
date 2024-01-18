@@ -20,15 +20,10 @@ function handleSubmit (event) {
         processFile();
         break;
       case "umap":
-// Questa va decisamente migliorata per poter importare umap multilivello
-// e in particolare con la formattazione nostra. Potrebbe essere che i
-// nostri livelli conservano l'etichetta, gli altri no (undefined)
-        var data = JSON.parse(event.target.result).layers[0];
-        data.features.map(f => geojson.features.push(f));
-        // Remove _umap_options attribute (will be restored)
-//        if ("_umap_options" in geojson ) {
-//          delete geojson["_umap_options"];
-//        }
+        var data = JSON.parse(event.target.result);
+		for ( l of data.layers ) {
+          l.features.map(f => geojson.features.push(f));
+		}
         processFile(); 
         break;
       case "qrcode":
@@ -289,6 +284,8 @@ function saveUmap() {
 function closeFile() {
 	document.getElementById("FeatureList").style.display="none";
 	document.getElementById("FeaturesTable").replaceChildren();
+	document.getElementById("FileList").style.display="none";
+	document.getElementById("Files").replaceChildren();
 	document.getElementById("upload").style.display="block";
 	document.getElementById("file").value = "";
 	geojson = {};
