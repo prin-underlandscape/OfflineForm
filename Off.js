@@ -1,4 +1,7 @@
-var geojson = {};
+var geojson = {
+	      "type": "FeatureCollection",
+	      "features": []
+	    };
 var umap = {};
 var inputType = ""; // geojson or umap
 
@@ -7,16 +10,21 @@ var inputType = ""; // geojson or umap
 function handleSubmit (event) {
 	//event.preventDefault(); // Evita che venga ricaricato il form
 	if (!file.value.length) return; // Annulla se file vuoto (prudente)
-  inputType = file.value.split('.').pop()
+    inputType = file.value.split('.').pop();
 	var reader = new FileReader();
 	reader.onload = (event) => {
     switch (inputType) {
       case "geojson":
-        geojson = JSON.parse(event.target.result);
+        var data = JSON.parse(event.target.result);
+        data.features.map(f => geojson.features.push(f));
         processFile();
         break;
       case "umap":
-        geojson = JSON.parse(event.target.result).layers[0];
+// Questa va decisamente migliorata per poter importare umap multilivello
+// e in particolare con la formattazione nostra. Potrebbe essere che i
+// nostri livelli conservano l'etichetta, gli altri no (undefined)
+        var data = JSON.parse(event.target.result).layers[0];
+        data.features.map(f => geojson.features.push(f));
         // Remove _umap_options attribute (will be restored)
 //        if ("_umap_options" in geojson ) {
 //          delete geojson["_umap_options"];
@@ -25,10 +33,6 @@ function handleSubmit (event) {
         break;
       case "qrcode":
         point = JSON.parse(event.target.result);
-        geojson = {
-	      "type": "FeatureCollection",
-	      "features": []
-	    };
 	    geojson.features.push(point);
         geojson.features[0].properties.ulsp_type = "Sito";
         map=[
@@ -75,6 +79,13 @@ function handleSubmit (event) {
     }
   }
   reader.readAsText(document.getElementById("file").files[0]);
+// Gestisce la visualizzazione dei file caricati  
+  document.getElementById("FileList").style.display="block";
+  var item = document.createElement("LI");
+  item.innerHTML=document.getElementById('file').files[0].name;
+  document.getElementById('Files').appendChild(item);
+  document.getElementById('file').value = "";
+  
   console.log(inputType);
 }
 
@@ -99,7 +110,6 @@ function featureName(fp) {
 }
 
 function redrawFeaturesTable() {
-  document.getElementById("FeaturesTable").replaceChildren();
   processFile();
 }
 
@@ -113,9 +123,11 @@ function redrawFeaturesTable() {
 // indicare/modificare il tipo, un bottone per la modifica della
 // feature guidata dal formato, ed uno per la rimozione della feature
 function processFile () {
+// serve in caso di merge
+  document.getElementById("FeaturesTable").replaceChildren();
   console.log(JSON.stringify(geojson));
 // Disabilita il pannello di upload
-  document.getElementById("upload").style.display="none";
+//  document.getElementById("upload").style.display="none";
 // Abilita il pannello di scelta della feature
   document.getElementById("FeatureList").style.display="block";
   
