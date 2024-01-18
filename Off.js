@@ -139,12 +139,13 @@ function processFile () {
     let selectType = document.createElement("SELECT");
     let editButton = document.createElement("BUTTON");
     let deleteButton = document.createElement("BUTTON");
+    let extractButton = document.createElement("BUTTON");
     
     let row = featuresTable.appendChild(document.createElement("thead"));
     row.appendChild(document.createElement("td")).appendChild(name);
     row.appendChild(document.createElement("td")).appendChild(selectType);
     row.appendChild(document.createElement("td")).appendChild(editButton);
-    row.appendChild(document.createElement("td")).appendChild(deleteButton);
+    row.appendChild(document.createElement("td")).appendChild(extractButton);
 
     console.log(geojson.features[featureIndex]);
     let fs = formatDescriptions.map(f => f.formname);
@@ -191,10 +192,18 @@ function processFile () {
       editFeature(featureIndex);
     })
   
-// Gestione del bottone di modifica
+// Gestione del bottone di rimozione
     deleteButton.innerHTML = "Rimuovi";
     deleteButton.addEventListener( "click", (event) => {
       geojson.features.splice(featureIndex, 1);  // Rimuove la feature dal buffer (geojson)
+      redrawFeaturesTable(); // Aggiorna la visualizzazione
+      console.log(geojson.features);
+    })
+    
+// Gestione del bottone di estrazione
+    extractButton.innerHTML = "Estrai";
+    extractButton.addEventListener( "click", (event) => {
+      geojson.features = [ geojson.features[featureIndex] ];  // Rimuove tutte le altre feature dal buffer (geojson)
       redrawFeaturesTable(); // Aggiorna la visualizzazione
       console.log(geojson.features);
     })
