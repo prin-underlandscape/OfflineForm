@@ -211,6 +211,7 @@ function processFile () {
 // convertito in JSON
 function saveGeoJSON() {
 	const a = document.createElement("a");
+	console.log(geojson);
 	a.href = URL.createObjectURL(
       new Blob([JSON.stringify(geojson, null, 2)], {type: "text/plain"}
    ));
@@ -410,11 +411,12 @@ function editFeature (featureIndex) {
   {
     if ( value.key !== "ulsp_type" ) {
       let nome = document.createTextNode(`${value.key}: `);
-      let present = geojson.features[featureIndex].properties[value.key];
       PropertiesList.appendChild(nome);
-      if ( present === undefined ) {
-          present = ""
-      }
+      if ( ! Object.hasOwn(geojson.features[featureIndex].properties,value.key) ) {
+// Crea la proprietà se non esistente nel geojson (non sono sicuro che sia una buona idea)
+		geojson.features[featureIndex].properties[value.key] = "";
+	  }
+      let present = geojson.features[featureIndex].properties[value.key];
       switch (value.type) {
         case "string": 
         case "date": 
@@ -438,14 +440,9 @@ function editFeature (featureIndex) {
   }
   });
   document.getElementById("FeatureList").style.display = "none";
-//  document.getElementById("FeaturesTable").childNodes[featureIndex].getElementsByTagName('label')[0].innerHTML =
-//	featureName(geojson.features[featureIndex].properties);
-//  console.log(geojson.features[featureIndex].properties);
-//  console.log(document.getElementById("FeaturesTable").childNodes[featureIndex].getElementsByTagName('label'));
-// svuota la tabella delle features (per ricostruirla)
-//  document.getElementById("FeaturesTable").replaceChildren();
-//  processFile();
-//		document.getElementById("upload").style.display="block";
+  document.getElementById("FileList").style.display = "none";
+  document.getElementById("upload").style.display = "none";
+
 }
 
 function closeEdit() {
@@ -455,5 +452,7 @@ function closeEdit() {
   document.getElementById("WrongAttributes").replaceChildren();
 // Abilita il pannello di scelta della feature
   document.getElementById("FeatureList").style.display="block";
+  document.getElementById("FileList").style.display = "block";
+  document.getElementById("upload").style.display = "block";
 }
 
