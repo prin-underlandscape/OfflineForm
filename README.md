@@ -1,4 +1,4 @@
-# Offline Form-based GeoJSON compiler
+# Offline Form-based GeoJSON editor
 
 The tool is designed to simplify the editing of GeoJSON features that must comply with a given content description. 
 
