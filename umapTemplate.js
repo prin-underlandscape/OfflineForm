@@ -120,7 +120,7 @@ da {Autore}`
                 "popupContentTemplate": `
 # SITO {Sito}
 {{{Foto}|300}}
-## {name} ( [[https://sites.google.com/view/prin-underlandscape/{Link}|link]])
+## {Titolo} ( [[https://sites.google.com/view/prin-underlandscape/{Link}|link]])
 {Descrizione}
 ---
 **Tipologia**: {Tipologia sito}
