@@ -28,7 +28,7 @@ function handleSubmit (event) {
         break;
       case "qrcode":
         point = JSON.parse(event.target.result);
-	    geojson.features.push(point);
+	      geojson.features.push(point);
         geojson.features[0].properties.ulsp_type = "Sito";
         map=[
     	  ["01-name","Titolo"],
@@ -93,9 +93,8 @@ function featureName(fp) {
         return `Sito ${fp.Sito} (${fp.Titolo})`;
         break;
       case "Percorso":
-        return `${fp.Titolo}`;
-        break;
       case "POI":
+      case "QRtag":
         return `${fp.Titolo}`;
         break;
     }
@@ -328,6 +327,11 @@ function editFeature (featureIndex) {
     let propertyValue = document.createElement("TEXTAREA");
     propertyValue.rows = 1 + Math.floor(present.length/40);
     propertyValue.cols = 40;
+    if ( value.value ) {
+      console.log(value.value);
+      propertyValue.maxLength = value.value;
+      propertyValue.placeholder = `Lunghezza massima: ${value.value} caratteri`
+    }
     propertyValue.overflow = "scroll";
     propertyValue.style = "vertical-align:middle"
     propertyValue.value = present;
@@ -414,11 +418,11 @@ function editFeature (featureIndex) {
       PropertiesList.appendChild(nome);
       if ( ! Object.hasOwn(geojson.features[featureIndex].properties,value.key) ) {
 // Crea la proprietà se non esistente nel geojson (non sono sicuro che sia una buona idea)
-		geojson.features[featureIndex].properties[value.key] = "";
-	  }
+		    geojson.features[featureIndex].properties[value.key] = "";
+	    }
       let present = geojson.features[featureIndex].properties[value.key];
       switch (value.type) {
-        case "string": 
+        case "string":
         case "date": 
         case "time": 
         case "pictures":

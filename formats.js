@@ -690,5 +690,40 @@ const formatDescriptions =
             "type": "time"
           }
         ]
+      },
+{
+      "formname": "QRtag",
+      "formitems": [
+          {
+            "key": "ulsp_type",
+            "value": "",
+            "type": "string"
+          },
+          {
+            "key": "Titolo",
+            "value": "40",
+            "type": "string"
+          },
+          {
+            "key": "Foto",
+            "value": "",
+            "type": "string"
+          },
+          {
+            "key": "fid",
+            "value": "",
+            "type": "string"
+          },
+          {
+            "key": "Descrizione",
+            "value": "",
+            "type": "string"
+          },
+          {
+            "key": "Testo",
+            "value": "700",
+            "type": "string"
+          }
+        ]
       }
 ]
