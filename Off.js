@@ -1,21 +1,43 @@
 var geojson = {
 	      "type": "FeatureCollection",
+        "properties": {
+          "Nome": "",
+          "Descrizione": "",
+          "umapKey": ""},
 	      "features": []
 	    };
 var umap = {};
-var inputType = ""; // geojson or umap
+var inputType = ""; // geojson, umap, qrcode
+var filename; // (without extension)
 
 // La funzione risponde alla scelta del file in apertura della App
 // e, a caricamento avvenuto, chiama la funzione processFile
 function handleSubmit (event) {
 	//event.preventDefault(); // Evita che venga ricaricato il form
 	if (!file.value.length) return; // Annulla se file vuoto (prudente)
-    inputType = file.value.split('.').pop();
+  [filename, inputType] = file.value.split('.');
+  filename = filename.split("\\").pop();
 	var reader = new FileReader();
 	reader.onload = (event) => {
     switch (inputType) {
       case "geojson":
         var data = JSON.parse(event.target.result);
+// Backward compatibility with FeatureCollections without properties
+// Does not override if already set (keeps first value)
+        if ( 'properties' in data ) {
+          if ( ! ( 'Nome' in geojson.properties ) || ( geojson.properties.Nome === '' ) ) {
+            geojson.properties.Nome = ( 'Nome' in data.properties ) ? geojson.properties.Nome : filename;
+          }
+          if ( ! ( 'Descrizione' in geojson.properties ) || ( geojson.properties.Descrizione === '' ) ) {
+            geojson.properties.Descrizione = ( 'Descrizione' in data.properties ) ? geojson.properties.Descrizione : '';
+          }
+          if ( ! ( 'umapKey' in geojson.properties ) || ( geojson.properties.umapKey === '' ) ) {
+            geojson.properties.umapKey = ( 'umapKey' in data.properties ) ? geojson.properties.umapKey : '';
+          }
+        } 
+        else
+          geojson.properties = {'Nome': '','Descrizione': '','umapKey': ''}
+// Join FeatureCollections
         data.features.map(f => geojson.features.push(f));
         processFile();
         break;
@@ -80,8 +102,6 @@ function handleSubmit (event) {
   item.innerHTML=document.getElementById('file').files[0].name;
   document.getElementById('Files').appendChild(item);
   document.getElementById('file').value = "";
-  
-  console.log(inputType);
 }
 
 // Funzione di utilità: data una lista di properties costruisce l'etichetta
@@ -119,11 +139,36 @@ function redrawFeaturesTable() {
 function processFile () {
 // serve in caso di merge
   document.getElementById("FeaturesTable").replaceChildren();
-  console.log(JSON.stringify(geojson));
 // Disabilita il pannello di upload
 //  document.getElementById("upload").style.display="none";
 // Abilita il pannello di scelta della feature
   document.getElementById("FeatureList").style.display="block";
+  
+//  console.log(geojson)
+
+// Verifica se il valore di input dei tre box è già definito (in caso di merge
+// è possibile e si conserva quello del primo file caricato) altrimenti
+// controlla se l'attributo è già definito nel geojson di partenza. Se lo è, lo
+// carica come valore del textbox corrispondente. In caso contrario, e solo nel
+// caso del "Nome", imposta il nome del file come nome della collezione.
+//console.log(document.getElementById('FeatureCollectionName').value)
+  if ( document.getElementById('FeatureCollectionName').value === "" ) {
+    if ( 'Nome' in geojson.properties && geojson.properties.Nome !== "") {
+      document.getElementById('FeatureCollectionName').value=geojson.properties.Nome;
+    } else {
+      document.getElementById('FeatureCollectionName').value=filename;
+    }
+  }
+  if ( document.getElementById('FeatureCollectionDescription').value === "" ) {
+    if ( geojson.properties.Descrizione ) {
+      document.getElementById('FeatureCollectionDescription').value=geojson.properties.Descrizione;
+    }
+  }
+  if ( document.getElementById('FeatureCollectionUmapKey').value === "" ) {
+    if ( geojson.properties.umapKey ) {
+      document.getElementById('FeatureCollectionUmapKey').value=geojson.properties.umapKey;
+    }
+  }
   
   let featuresTable=document.getElementById("FeaturesTable");
   
@@ -132,16 +177,17 @@ function processFile () {
     let name = document.createElement("LABEL");
     let selectType = document.createElement("SELECT");
     let editButton = document.createElement("BUTTON");
-    let deleteButton = document.createElement("BUTTON");
     let extractButton = document.createElement("BUTTON");
+    let deleteButton = document.createElement("BUTTON");
     
     let row = featuresTable.appendChild(document.createElement("thead"));
     row.appendChild(document.createElement("td")).appendChild(name);
     row.appendChild(document.createElement("td")).appendChild(selectType);
     row.appendChild(document.createElement("td")).appendChild(editButton);
     row.appendChild(document.createElement("td")).appendChild(extractButton);
+    row.appendChild(document.createElement("td")).appendChild(deleteButton);
 
-    console.log(geojson.features[featureIndex]);
+//    console.log(geojson.features[featureIndex]);
     let fs = formatDescriptions.map(f => f.formname);
     fs.unshift("Non definito");
     let typeIndex = 0;
@@ -181,7 +227,7 @@ function processFile () {
       editButton.disabled=true;
     }
     editButton.addEventListener( "click", (event) => {
-      console.log(geojson.features[featureIndex].properties.ulsp_type);
+//      console.log(geojson.features[featureIndex].properties.ulsp_type);
 //     editFeature(featureIndex, geojson.features[featureIndex].properties.ulsp_type);
       editFeature(featureIndex);
     })
@@ -199,9 +245,10 @@ function processFile () {
     extractButton.addEventListener( "click", (event) => {
       geojson.features = [ geojson.features[featureIndex] ];  // Rimuove tutte le altre feature dal buffer (geojson)
       redrawFeaturesTable(); // Aggiorna la visualizzazione
-      console.log(geojson.features);
+//      console.log(geojson.features);
     })
   })
+  console.log(geojson);
 }
 
 // La funzione risponde al tasto "Salva un file geoJSON"
@@ -209,12 +256,15 @@ function processFile () {
 // di HTML5. Il link corrisponde ad un blob che contiene il geojson
 // convertito in JSON
 function saveGeoJSON() {
+  geojson.properties.Nome = document.getElementById('FeatureCollectionName').value;
+  geojson.properties.Descrizione = document.getElementById('FeatureCollectionDescription').value;
+  geojson.properties.umapKey = document.getElementById('FeatureCollectionUmapKey').value;
 	const a = document.createElement("a");
-	console.log(geojson);
+//	console.log(geojson);
 	a.href = URL.createObjectURL(
       new Blob([JSON.stringify(geojson, null, 2)], {type: "text/plain"}
    ));
-	a.setAttribute("download", "data.geojson");
+	a.setAttribute("download", geojson.properties.Nome+".geojson");
 	document.body.appendChild(a);
 	a.click();
 	document.body.removeChild(a);
@@ -230,14 +280,13 @@ function saveGeoJSON() {
 // savegeojson
 function saveUmap() {
   var newUmap = umapTemplate;
+  newUmap.properties.name = document.getElementById('FeatureCollectionName').value;
+  newUmap.properties.description = document.getElementById('FeatureCollectionDescription').value;
+  newUmap.properties.umapKey = document.getElementById('FeatureCollectionUmapKey').value;
   let allowedTypes = newUmap.layers.map( l => l._umap_options.name );
-  console.log(allowedTypes);
-//  percorsi.features.push(lxpercorso);
-//  foto.features.push(lxfoto);
-//  siti.features.push(lxsito);
   
   geojson.features.map( feature => {
-    console.log(feature.properties.ulsp_type);
+//    console.log(feature.properties.ulsp_type);
     if ( allowedTypes.includes(feature.properties.ulsp_type) ) {
 	  let layer = newUmap.layers.find(l => l._umap_options.name === feature.properties.ulsp_type);
       feature.properties._umap_options = {};
@@ -248,27 +297,19 @@ function saveUmap() {
       }
       if ( feature.properties.ulsp_type === "Sito" ) {
 	    newUmap.geometry.coordinates = feature.geometry.coordinates;
-	    newUmap.properties.name = "Sito " + feature.properties.Sito;
       }
-//      let layer = umap.layers.find(l => l._umap_options.name === feature.properties.ulsp_type);
-//      layer.features.push(feature);
     }
   });
-//  let center = newUmap.layers.find(l => l._umap_options.name === "POI" || l._umap_options.name === "SITO" ).features[1].geometry.coordinates;
-//  console.log(center);
-//  newUmap.geometry.coordinates = coordinates;
-//  let siteName = newUmap.layers.find(l => l._umap_options.name === "SITO" ).features[1].properties.Sito;
-//  newUmap.properties.name = "Sito " + siteName;
-//  console.log(sito)
-//  if ( sito !== undefined ) {
-
   console.log(newUmap);
-
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([JSON.stringify(newUmap, null, 2)], {
     type: "text/plain"
   }));
-  a.setAttribute("download", "map.umap");
+  if ( 'umapKey' in newUmap.properties && newUmap.properties.umapKey != '' ) a.setAttribute("download", newUmap.properties.umapKey+".umap")
+	else if ( 'name' in newUmap.properties  && newUmap.properties.name != '') a.setAttribute("download", newUmap.properties.name+".umap")
+  else a.setAttribute("download", filename+".geojson");
+	
+//	a.setAttribute("download", geojson.properties.Nome+".umap");
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -288,7 +329,14 @@ function closeFile() {
 	document.getElementById("Files").replaceChildren();
 	document.getElementById("upload").style.display="block";
 	document.getElementById("file").value = "";
-	geojson = {};
+  geojson = {
+    "type": "FeatureCollection",
+    "properties": {
+      "Nome": "",
+      "Descrizione": "",
+      "umapKey": ""},
+      "features": []
+  };
 }
 
 // La funzione risponde al tasto "Modifica" relativo ad una feature
@@ -300,10 +348,10 @@ function closeFile() {
 // (string), o a valori guidati (stringcombo).
 function editFeature (featureIndex) {
   typeName = geojson.features[featureIndex].properties.ulsp_type;
-  console.log(`${featureIndex} + ${typeName}`);
-  console.log(geojson);
+//  console.log(`${featureIndex} + ${typeName}`);
+//  console.log(geojson);
   let properties = formatDescriptions.find(frm => frm.formname === typeName);
-  console.log(properties);
+//  console.log(properties);
   let propertiesList=document.getElementById("PropertiesList");
   let wrongAttributes=document.getElementById("WrongAttributes");
 
@@ -328,7 +376,7 @@ function editFeature (featureIndex) {
     propertyValue.rows = 1 + Math.floor(present.length/40);
     propertyValue.cols = 40;
     if ( value.value ) {
-      console.log(value.value);
+//      console.log(value.value);
       propertyValue.maxLength = value.value;
       propertyValue.placeholder = `Lunghezza massima: ${value.value} caratteri`
     }
@@ -383,7 +431,7 @@ function editFeature (featureIndex) {
   document.getElementById("FeatureEditor").style.display = "block";
     
   let ulspAttributes = properties.formitems.map(i => i.key);
-  console.log(geojson.features[featureIndex].properties);
+//  console.log(geojson.features[featureIndex].properties);
   Object.keys(geojson.features[featureIndex].properties).forEach( (inputAttr, index) =>
   {
 // Genera l'elenco degli attributi da rimuovere, non contenuti nel database Underlandscape    
@@ -397,9 +445,9 @@ function editFeature (featureIndex) {
       removeButton.innerHTML = "Rimuovi";
       removeButton.id = inputAttr;
       removeButton.addEventListener("click", (event) => {
-        console.log(geojson.features[featureIndex].properties[event.target.id]);
+//        console.log(geojson.features[featureIndex].properties[event.target.id]);
         delete geojson.features[featureIndex].properties[event.target.id];
-        console.log(document.getElementById(inputAttr));
+//        console.log(document.getElementById(inputAttr));
         document.getElementById(inputAttr).parentNode.style.visibility = "Hidden";
         document.getElementById(inputAttr).parentNode.style.display = "none";
       })
@@ -458,5 +506,7 @@ function closeEdit() {
   document.getElementById("FeatureList").style.display="block";
   document.getElementById("FileList").style.display = "block";
   document.getElementById("upload").style.display = "block";
+  
+  console.log(geojson);
 }
 
