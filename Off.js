@@ -12,7 +12,7 @@ var filename; // (without extension)
 
 // La funzione risponde alla scelta del file in apertura della App
 // e, a caricamento avvenuto, chiama la funzione processFile
-function handleSubmit (event) {
+function fileUpload (event) {
 	//event.preventDefault(); // Evita che venga ricaricato il form
 	if (!file.value.length) return; // Annulla se file vuoto (prudente)
   [filename, inputType] = file.value.split('.');
