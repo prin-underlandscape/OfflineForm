@@ -19,6 +19,7 @@ function fileUpload (event) {
   filename = filename.split("\\").pop();
 	var reader = new FileReader();
 	reader.onload = (event) => {
+    document.getElementById("info").style.display="none";
     switch (inputType) {
       case "geojson":
         var data = JSON.parse(event.target.result);
@@ -53,7 +54,7 @@ function fileUpload (event) {
 	      geojson.features.push(point);
         geojson.features[0].properties.ulsp_type = "Sito";
         map=[
-    	  ["01-name","Titolo"],
+    	    ["01-name","Titolo"],
           ["02-description","Descrizione"],
           ["03-date","Data"],
           ["04-time","Ora"],
@@ -61,8 +62,8 @@ function fileUpload (event) {
           ["08-Provincia","Provincia"],
           ["09-Comune","Comune"],
           ["10-Toponimo","Toponimo"],
-	      ["11-Microtoponimo","Microtoponimo"],
-	      ["12-Altitudine","Altitudine"],
+	        ["11-Microtoponimo","Microtoponimo"],
+	        ["12-Altitudine","Altitudine"],
           ["13-Strada accesso","Strade d'accesso"],
           ["14-Altra localizzazione","Altri elementi di localizzazione"],
           ["15-Tipologia","Tipologia sito"],
@@ -94,6 +95,7 @@ function fileUpload (event) {
         break;
       default: return;
     }
+    document.getElementById("selectFile").innerHTML="Seleziona un altro file da incorporare";
   }
   reader.readAsText(document.getElementById("file").files[0]);
 // Gestisce la visualizzazione dei file caricati  
@@ -432,38 +434,48 @@ function editFeature (featureIndex) {
     
   let ulspAttributes = properties.formitems.map(i => i.key);
 //  console.log(geojson.features[featureIndex].properties);
+// Genera l'elenco degli attributi da rimuovere, non contenuti nel formato Underlandscape 
+  wrongAttributes.style.display = "none";   
+  let wrongAttributesTitle = document.createElement('H4');
+  wrongAttributesTitle.innerHTML='Queste proprietà non sono definite nel formato Underlandscape: andrebbero rimossi';
+  wrongAttributes.appendChild(wrongAttributesTitle);
   Object.keys(geojson.features[featureIndex].properties).forEach( (inputAttr, index) =>
-  {
-// Genera l'elenco degli attributi da rimuovere, non contenuti nel database Underlandscape    
-    if ( ! ulspAttributes.find( ulspAttr => inputAttr === ulspAttr) )  {
-      let keyvalue = document.createElement("LABEL");
-      keyvalue.style.color = "red";
-      keyvalue.style.fontSize = "x-small ";
-      val = JSON.stringify(geojson.features[featureIndex].properties[inputAttr]);
-      keyvalue.innerHTML = `\t${inputAttr}: ${val}`;
-      let removeButton = document.createElement("BUTTON");
-      removeButton.innerHTML = "Rimuovi";
-      removeButton.id = inputAttr;
-      removeButton.addEventListener("click", (event) => {
-//        console.log(geojson.features[featureIndex].properties[event.target.id]);
-        delete geojson.features[featureIndex].properties[event.target.id];
-//        console.log(document.getElementById(inputAttr));
-        document.getElementById(inputAttr).parentNode.style.visibility = "Hidden";
-        document.getElementById(inputAttr).parentNode.style.display = "none";
-      })
-      let wrongAttribute = document.createElement("DIV");
-      let parent = wrongAttributes.appendChild(wrongAttribute);
-      parent.appendChild(removeButton);
-      parent.appendChild(keyvalue);
-      parent.appendChild(document.createElement("br"));
-    }
-  });
+    {
+      if ( ! ulspAttributes.find( ulspAttr => inputAttr === ulspAttr) )  {
+        wrongAttributes.style.display = "block"; // Visualizza il div solo se c'è almeno un attributo estraneo   
+        let keyvalue = document.createElement("LABEL");
+        keyvalue.style.color = "red";
+        keyvalue.style.fontSize = "x-small ";
+        val = JSON.stringify(geojson.features[featureIndex].properties[inputAttr]);
+        keyvalue.innerHTML = `\t${inputAttr}: ${val}`;
+        let removeButton = document.createElement("BUTTON");
+        removeButton.setAttribute('style', 'width:auto')
+        removeButton.innerHTML = "Rimuovi";
+        removeButton.id = inputAttr;
+        removeButton.addEventListener("click", (event) => {
+  //        console.log(geojson.features[featureIndex].properties[event.target.id]);
+          delete geojson.features[featureIndex].properties[event.target.id];
+  //        console.log(document.getElementById(inputAttr));
+          document.getElementById(inputAttr).parentNode.style.visibility = "Hidden";
+          document.getElementById(inputAttr).parentNode.style.display = "none";
+        })
+        let wrongAttribute = document.createElement("DIV");
+        let parent = wrongAttributes.appendChild(wrongAttribute);
+        parent.appendChild(keyvalue);
+        parent.appendChild(removeButton);
+        parent.appendChild(document.createElement("br"));
+      }
+    });
 // Genera l'elenco editabile dei campi editabili, evidenziando errori
+  let editableAttributesTitle = document.createElement('H4');
+  editableAttributesTitle.innerHTML='Queste proprietà sono definite nel formato Underlandscape e possono essere modificati';
+  propertiesList.appendChild(editableAttributesTitle);
   properties.formitems.forEach( (value,index,array) =>
   {
+    console.log(propertiesList.innerHTML);
     if ( value.key !== "ulsp_type" ) {
       let nome = document.createTextNode(`${value.key}: `);
-      PropertiesList.appendChild(nome);
+      propertiesList.appendChild(nome);
       if ( ! Object.hasOwn(geojson.features[featureIndex].properties,value.key) ) {
 // Crea la proprietà se non esistente nel geojson (non sono sicuro che sia una buona idea)
 		    geojson.features[featureIndex].properties[value.key] = "";
@@ -482,13 +494,13 @@ function editFeature (featureIndex) {
         case "double": 
         case "integer": 
           editDouble(present,value,index,array);
-          PropertiesList.appendChild(document.createTextNode(value.unit));
+          propertiesList.appendChild(document.createTextNode(value.unit));
           break;
         default:
           editString("nil",value,index,array);
           break;
       }
-    PropertiesList.appendChild(document.createElement("br"));
+    propertiesList.appendChild(document.createElement("br"));
   }
   });
   document.getElementById("FeatureList").style.display = "none";
