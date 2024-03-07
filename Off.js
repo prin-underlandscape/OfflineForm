@@ -472,7 +472,6 @@ function editFeature (featureIndex) {
   propertiesList.appendChild(editableAttributesTitle);
   properties.formitems.forEach( (value,index,array) =>
   {
-    console.log(propertiesList.innerHTML);
     if ( value.key !== "ulsp_type" ) {
       let nome = document.createTextNode(`${value.key}: `);
       propertiesList.appendChild(nome);
