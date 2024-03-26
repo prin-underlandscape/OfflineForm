@@ -26,14 +26,14 @@ function fileUpload (event) {
 // Backward compatibility with FeatureCollections without properties
 // Does not override if already set (keeps first value)
         if ( 'properties' in data ) {
-          if ( ! ( 'Nome' in geojson.properties ) || ( geojson.properties.Nome === '' ) ) {
-            geojson.properties.Nome = ( 'Nome' in data.properties ) ? geojson.properties.Nome : filename;
+          if ( ( ! ( 'Nome' in geojson.properties ) ) || ( geojson.properties.Nome === '' ) ) {
+            geojson.properties.Nome = ( 'Nome' in data.properties ) ? data.properties.Nome : filename;
           }
-          if ( ! ( 'Descrizione' in geojson.properties ) || ( geojson.properties.Descrizione === '' ) ) {
-            geojson.properties.Descrizione = ( 'Descrizione' in data.properties ) ? geojson.properties.Descrizione : '';
+          if ( ( ! ( 'Descrizione' in geojson.properties ) ) || ( geojson.properties.Descrizione === '' ) ) {
+            geojson.properties.Descrizione = ( 'Descrizione' in data.properties ) ? data.properties.Descrizione : '';
           }
-          if ( ! ( 'umapKey' in geojson.properties ) || ( geojson.properties.umapKey === '' ) ) {
-            geojson.properties.umapKey = ( 'umapKey' in data.properties ) ? geojson.properties.umapKey : '';
+          if ( ( ! ( 'umapKey' in geojson.properties ) ) || ( geojson.properties.umapKey === '' ) ) {
+            geojson.properties.umapKey = ( 'umapKey' in data.properties ) ? data.properties.umapKey : '';
           }
         } 
         else
@@ -331,6 +331,9 @@ function closeFile() {
 	document.getElementById("Files").replaceChildren();
 	document.getElementById("upload").style.display="block";
 	document.getElementById("file").value = "";
+  document.getElementById('FeatureCollectionName').value="";
+  document.getElementById('FeatureCollectionDescription').value="";
+  document.getElementById('FeatureCollectionUmapKey').value="";
   geojson = {
     "type": "FeatureCollection",
     "properties": {

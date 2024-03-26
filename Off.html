@@ -94,22 +94,22 @@
     <div id="info" style="font-size: 13pt; width: 800px">
        <h3>Una applicazione per l'editing di documenti georeferenziati</h3>
       Questa applicazione semplifica la gestione dei documenti georeferenziati
-      nel formato interno del progetto Underlandscape. Il formato consiste in una FeatureCollection GeoJSON
-      dove le proprietà (attributi dell'attributo "properties") della FeatureCollection e delle singole Feature sono codificate secondo uno
-      schema specifico per il progetto.
+      nel formato dei dataset del progetto Underlandscape. Il formato del dataset consiste in una 
+      FeatureCollection GeoJSON le cui proprietà (cioè gli attributi dell'attributo "properties") della FeatureCollection e quelle delle Feature sono codificate secondo uno schema specifico.
       
       Questa app consente di eseguire le seguenti operazioni:
       <ul>
-      <li> Inserire nella FeatureCollection in lavorazione altri documenti codificati diversamente. In particolare:
+      <li> Inserire nella in un dataset in lavorazione altri dataset o documenti codificati diversamente.
+      In particolare:
         <ul>
           <li> File in formato nel GeoJSON prodotto dall'applicazione gaiasplit </li>
           <li> File nel formato umap di progetto </li>
           <li> File nel formato definito per i qrcode della app di acquisizione sul campo</li>
         </ul>
       </li>
-      <li> Aggregare vari documenti, caricando successivamente più file GeoJSON nella FeatureCollection in lavorazione</li>
-      <li> Modificare gli attributi della FeatureCollection in lavorazione</li>
-      <li> Selezionare le Features nella FeatureCollection in lavorazione:
+      <li> Aggregare vari documenti, caricando successivamente più file GeoJSON nel dataset in lavorazione</li>
+      <li> Modificare gli attributi del dataset in lavorazione</li>
+      <li> Selezionare le Features nel dataset in lavorazione:
         <ul>
           <li>Estreando una singola Feature (e rimuovendo tutte le altre)</li>
           <li>Rimuovendo una singola Feature (e conservando tutte le altre) </li>
@@ -118,9 +118,9 @@
       <li> Scegliere il tipo delle Feature in lavorazione tra quelli definiti dal formato di progetto </li>
       <li> Modificare le proprietà di ciascuna delle Feature in lavorazione. In questa fase lo strumento indica
       quali attributi presenti non sono presenti nel formato di progetto, e andrebbero quindi preferibilmente eliminati </li>
-      <li> Registrare la FeatureCollection in lavorazione come:
+      <li> Registrare il dataset in lavorazione come:
         <ul>
-          <li> un file GeoJSON in formato compatibile con il formato di progetto</li>
+          <li> un dataset Underlandscape </li>
           <li> un file umap in formato compatibile con il formato di progetto</li>
         </ul>
       </li>
@@ -129,7 +129,7 @@
       <hr style="width:50%;margin-left:0;height:2px;border-width:0;color:gray;background-color:gray">
     </div>
     <div id="FileList" hidden>
-      File incorporati nella FeatureCollection in lavorazione:
+      File incorporati nel dataset in lavorazione:
       <ul id="Files"></ul>
     </div>
     <div id="upload">
@@ -138,23 +138,23 @@
     </div>
     <div id="FeatureList" hidden >
       <hr style="width:50%;margin-left:0;height:2px;border-width:0;color:gray;background-color:gray">
-      <h3>Proprietà della FeatureCollection in lavorazione</h3>
-      <p><label>Nome della FeatureCollection:</label>
+      <h3>Proprietà del dataset in lavorazione</h3>
+      <p><label>Nome del dataset:</label>
       <input id="FeatureCollectionName" cols="50"/>
       </p>
-      <p><label>Descrizione della FeatureCollection:</label><br>
+      <p><label>Descrizione del dataset:</label><br>
       <textarea id="FeatureCollectionDescription" rows="2" cols="50"></textarea>
       </p>
       <p><label>Identificativo della mappa umap:</label><br>
       <input id="FeatureCollectionUmapKey" cols="50"/>
       </p>
       <hr style="width:50%;margin-left:0;height:2px;border-width:0;color:gray;background-color:gray">
-      <h3>Elenco delle feature nella FeatureCollection in lavorazione</h3>
+      <h3>Elenco delle feature nel dataset in lavorazione</h3>
       <table id="FeaturesTable"></table>
 	  <hr style="width:50%;margin-left:0;height:2px;border-width:0;color:gray;background-color:gray">
-      <button type="button" onclick=saveGeoJSON() style="width:300px">Salva un file GeoJSON</button>
+      <button type="button" onclick=saveGeoJSON() style="width:300px">Salva un dataset</button>
       <button type="button" onclick=saveUmap() style="width:300px">Salva una mappa umap</button>
-      <button type="button" onclick=closeFile() style="width:300px">Chiudi il file (senza salvare)</button>
+      <button type="button" onclick=closeFile() style="width:300px">Chiudi il dataset in lavorazione</button>
     </div>
     <div id="FeatureEditor" hidden>
       <div id="WrongAttributes">
