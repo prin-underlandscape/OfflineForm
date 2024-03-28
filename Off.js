@@ -272,54 +272,7 @@ function saveGeoJSON() {
 	document.body.removeChild(a);
 }
 
-// Prepara un file umap con le features contenute nella variabile
-// geojson.
-// Utilizza il template contenuto nella variabile "umap". Il file
-// è prodotto a partire da un umap scaricato dalla mappa
-// underlandscape-template_93188, eliminando tutte le features nei
-// livelli, gli id dei livelli, e la uri
-// La tecnica per il salvataggio del file è analoga a quella di
-// savegeojson
-function saveUmap() {
-  var newUmap = umapTemplate;
-  newUmap.properties.name = document.getElementById('FeatureCollectionName').value;
-  newUmap.properties.description = document.getElementById('FeatureCollectionDescription').value;
-  newUmap.properties.umapKey = document.getElementById('FeatureCollectionUmapKey').value;
-  let allowedTypes = newUmap.layers.map( l => l._umap_options.name );
-  
-  geojson.features.map( feature => {
-//    console.log(feature.properties.ulsp_type);
-    if ( allowedTypes.includes(feature.properties.ulsp_type) ) {
-	  let layer = newUmap.layers.find(l => l._umap_options.name === feature.properties.ulsp_type);
-      feature.properties._umap_options = {};
-      feature.properties._umap_options.popupTemplate = "Default";
-	  layer.features.push(feature);
-	  if ( feature.properties.ulsp_type === "Sito" || feature.properties.ulsp_type === "POI" ) {
-	    newUmap.geometry.coordinates = feature.geometry.coordinates;
-      }
-      if ( feature.properties.ulsp_type === "Sito" ) {
-	    newUmap.geometry.coordinates = feature.geometry.coordinates;
-      }
-    }
-  });
-  console.log(newUmap);
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([JSON.stringify(newUmap, null, 2)], {
-    type: "text/plain"
-  }));
-  if ( 'umapKey' in newUmap.properties && newUmap.properties.umapKey != '' ) a.setAttribute("download", newUmap.properties.umapKey+".umap")
-	else if ( 'name' in newUmap.properties  && newUmap.properties.name != '') a.setAttribute("download", newUmap.properties.name+".umap")
-  else a.setAttribute("download", filename+".geojson");
-	
-//	a.setAttribute("download", geojson.properties.Nome+".umap");
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
 
-
-	//$("#FeatureList").hide();
-	//$("#upload").show();
-}
 
 // La funzione risponde al tasto "Chiudi il file".
 // Gestisce l'interfaccia chiudendo l'interfaccia di editing e
