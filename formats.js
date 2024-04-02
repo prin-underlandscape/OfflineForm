@@ -525,7 +525,34 @@ const formatDescriptions =
           "key": "Ora",
           "value": "",
           "type": "time"
-        }
+        },
+        {
+        "key": "Tags",
+        "values": {
+          "items": [
+            {
+              "item": ""
+            },
+            {
+              "item": "Albergo"
+            },
+            {
+              "item": "Ristorante"
+            },
+            {
+              "item": "Bar"
+            },
+            {
+              "item": "Parco giochi"
+            },
+            {
+              "item": "Attrazione"
+            }
+          ]
+        },
+        "value": "",
+        "type": "stringmulti"
+      },
       ]
 },
 {

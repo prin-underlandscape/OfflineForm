@@ -250,7 +250,7 @@ function processFile () {
 //      console.log(geojson.features);
     })
   })
-  console.log(geojson);
+  //console.log(geojson);
 }
 
 // La funzione risponde al tasto "Salva un file geoJSON"
@@ -313,7 +313,7 @@ function editFeature (featureIndex) {
   let propertiesList=document.getElementById("PropertiesList");
   let wrongAttributes=document.getElementById("WrongAttributes");
 
-  function editDouble(present,value,index,array) {
+  function editDouble(present,value) {
     let propertyValue = document.createElement("TEXTAREA");
     propertyValue.rows = 1;
     propertyValue.cols = 10;
@@ -329,7 +329,7 @@ function editFeature (featureIndex) {
     propertiesList.appendChild(propertyValue);
   }
 
-  function editString(present,value,index,array) {
+  function editString(present,value) {
     let propertyValue = document.createElement("TEXTAREA");
     propertyValue.rows = 1 + Math.floor(present.length/40);
     propertyValue.cols = 40;
@@ -354,7 +354,7 @@ function editFeature (featureIndex) {
     propertiesList.appendChild(propertyValue);
   }
   
-  function editStringcombo(present,value,index,array) {
+  function editStringcombo(present,value) {
     let legal=false;
     let propertyValue = document.createElement("SELECT");
     value.values.items.forEach( (f,i) => { 
@@ -371,6 +371,63 @@ function editFeature (featureIndex) {
       let fieldName = propertyEvent.target.id;
       geojson.features[featureIndex].properties[fieldName] = propertyEvent.target.value;
       document.activeElement.blur();
+    });
+    if ( present === "" ) propertyValue.style.backgroundColor = "yellow";
+    propertiesList.appendChild(propertyValue);
+    if ( legal === false ) {
+      let wrongValue = document.createElement("LABEL");
+      wrongValue.style.color = "red";
+      wrongValue.innerHTML = `\t(${present})`;
+      propertiesList.appendChild(wrongValue);
+//        console.log(present);
+    }
+  }
+  
+/* Crea un selettore multiplo
+ * Parametri:
+ * present: il valore del selettore nel file in input
+ * value: la descrizione della proprietà in format.js
+*/
+  function editStringmulti(present,value) {
+    let legal=true;
+    let propertyValue = document.createElement("SELECT");
+// Imposta la selezione multipla
+    propertyValue.setAttribute("multiple",true)
+    propertyValue.setAttribute("size",4) 
+    propertyValue.setAttribute("style","vertical-align: top")
+// Visualizza i valori delle opzioni e riporta la selezione precedente
+    validLabels = value.values.items.map(i => i.item);
+//    console.log(validLabels);
+    validLabels.forEach( (vl,i) => { 
+      o = document.createElement("option");
+      o.label = vl;
+      propertyValue.add(o);
+      if ( present.includes(vl) ) {
+        o.setAttribute("style","font-style: italic;")
+        o.selected = true
+      } else {
+        o.setAttribute("style","font-style: normal;")
+        o.selected = false
+      }
+    });
+    console.log(Array.from(propertyValue.querySelectorAll("option:checked"), e => e.label))
+// Importa il nome del campo (es. "Titolo")
+    propertyValue.id = value.key;
+// Acquisisce i valori selezionati ad ogni modifica
+    propertyValue.addEventListener("change", (propertyEvent) => {
+      let fieldName = propertyEvent.target.id;
+      geojson.features[featureIndex].properties[fieldName] = []
+      console.log(Array.from(propertyValue.querySelectorAll("option:checked"), e => e.label))
+      for ( opt of propertyValue.options ) {
+//        console.log(opt)
+        if ( opt.selected ) {
+          opt.setAttribute("style","font-style: italic;")
+          geojson.features[featureIndex].properties[fieldName].push(opt.label)
+        } else {
+         opt.setAttribute("style","font-style: normal;")
+       }
+      }
+//      console.log(Array.from(propertyValue.querySelectorAll("option:checked"),e=>e.value));
     });
     if ( present === "" ) propertyValue.style.backgroundColor = "yellow";
     propertiesList.appendChild(propertyValue);
@@ -426,33 +483,37 @@ function editFeature (featureIndex) {
   let editableAttributesTitle = document.createElement('H4');
   editableAttributesTitle.innerHTML='Queste proprietà sono definite nel formato Underlandscape e possono essere modificati';
   propertiesList.appendChild(editableAttributesTitle);
-  properties.formitems.forEach( (value,index,array) =>
+// Per ogni proprietà della feature genera una riga con una etichetta ed un box di editing
+  properties.formitems.forEach( property =>
   {
-    if ( value.key !== "ulsp_type" ) {
-      let nome = document.createTextNode(`${value.key}: `);
+    if ( property.key !== "ulsp_type" ) {
+      let nome = document.createTextNode(`${property.key}: `);
       propertiesList.appendChild(nome);
-      if ( ! Object.hasOwn(geojson.features[featureIndex].properties,value.key) ) {
+      if ( ! Object.hasOwn(geojson.features[featureIndex].properties,property.key) ) {
 // Crea la proprietà se non esistente nel geojson (non sono sicuro che sia una buona idea)
-		    geojson.features[featureIndex].properties[value.key] = "";
+		    geojson.features[featureIndex].properties[property.key] = "";
 	    }
-      let present = geojson.features[featureIndex].properties[value.key];
-      switch (value.type) {
+      let present = geojson.features[featureIndex].properties[property.key];
+      switch (property.type) {
         case "string":
         case "date": 
         case "time": 
         case "pictures":
-          editString(present,value,index,array);
+          editString(present,property);
           break;
         case "stringcombo": 
-          editStringcombo(present,value,index,array);
+          editStringcombo(present,property);
+          break;
+        case "stringmulti": 
+          editStringmulti(present,property);
           break;
         case "double": 
         case "integer": 
-          editDouble(present,value,index,array);
-          propertiesList.appendChild(document.createTextNode(value.unit));
+          editDouble(present,property);
+          propertiesList.appendChild(document.createTextNode(property.unit));
           break;
         default:
-          editString("nil",value,index,array);
+          editString("nil",property);
           break;
       }
     propertiesList.appendChild(document.createElement("br"));
