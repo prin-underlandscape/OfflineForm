@@ -1,3 +1,25 @@
+const tagList = 
+[
+  {
+    "item": ""
+  },
+  {
+    "item": "Albergo"
+  },
+  {
+    "item": "Ristorante"
+  },
+  {
+    "item": "Bar"
+  },
+  {
+    "item": "Parco giochi"
+  },
+  {
+    "item": "Attrazione"
+  }
+]
+
 const formatDescriptions = 
 // To define/modify the description of the formats edit the lines below
 // and check they are legal JSON at https://jsonlint.com/. Do not touch
@@ -527,28 +549,17 @@ const formatDescriptions =
           "type": "time"
         },
         {
-        "key": "Tags",
+          "key": "Tag primario",
+          "values": {
+            "items": tagList
+          },
+          "value": "",
+          "type": "stringcombo"
+        },
+        {
+        "key": "Altri tag",
         "values": {
-          "items": [
-            {
-              "item": ""
-            },
-            {
-              "item": "Albergo"
-            },
-            {
-              "item": "Ristorante"
-            },
-            {
-              "item": "Bar"
-            },
-            {
-              "item": "Parco giochi"
-            },
-            {
-              "item": "Attrazione"
-            }
-          ]
+          "items": tagList
         },
         "value": "",
         "type": "stringmulti"
