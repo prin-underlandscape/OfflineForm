@@ -1,24 +1,43 @@
 const tagList = 
 [
   {
-    "item": ""
+    "item": "",
+    "iconURL": "/uploads/pictogram/hotel.svg"
   },
   {
-    "item": "Albergo"
+    "item": "Albergo",
+    "iconURL": "/uploads/pictogram/hotel.svg"
   },
   {
-    "item": "Ristorante"
+    "item": "Ristorante",
+    "iconURL": "/uploads/pictogram/restaurant.svg"
   },
   {
-    "item": "Bar"
+    "item": "Bar",
+    "iconURL": "/uploads/pictogram/cafe.svg"
   },
   {
-    "item": "Parco giochi"
+    "item": "Parco giochi",
+    "iconURL": "/uploads/pictogram/playground.svg"
   },
   {
-    "item": "Attrazione"
+    "item": "Monumento",
+    "iconURL": "/uploads/pictogram/monument.svg"
+  },
+  {
+    "item": "Parcheggio",
+    "iconURL": "/uploads/pictogram/parking-car.svg"
+  },
+  {
+    "item": "Segnalazione",
+    "iconURL": "/uploads/pictogram/guide-post.svg"
+  },
+  {
+    "item": "Fermata Bus",
+    "iconURL": "/uploads/pictogram/bus-stop.svg"
   }
 ]
+
 
 const formatDescriptions = 
 // To define/modify the description of the formats edit the lines below
